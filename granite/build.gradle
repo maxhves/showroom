@@ -33,4 +33,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Recycler View
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    // View Pager 2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // Constraint Layout
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
 }
