@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Granite.iml" filepath="$PROJECT_DIR$/Granite.iml" group="Granite" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Granite/app" />
+      <module fileurl="file://$PROJECT_DIR$/granite/granite.iml" filepath="$PROJECT_DIR$/granite/granite.iml" group="Granite/granite" />
+    </modules>
+  </component>
+</project>

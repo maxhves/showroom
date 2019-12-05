@@ -1,2 +1,3 @@
 rootProject.name='Granite'
 include ':app'
+include ':granite'
