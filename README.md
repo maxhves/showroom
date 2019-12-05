@@ -1,2 +1,2 @@
 # Granite
-An Image Gallery Library
+An Image Gallery Library for Android
