@@ -6,9 +6,9 @@
     android:layout_height="match_parent">
 
     <!-- Image -->
-    <ImageView
+    <com.alexvasilkov.gestures.views.GestureImageView
         android:id="@+id/row_image_gallery_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

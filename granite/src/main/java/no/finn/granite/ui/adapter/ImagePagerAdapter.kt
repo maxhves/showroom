@@ -1,12 +1,11 @@
 package no.finn.granite.ui.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import com.alexvasilkov.gestures.views.GestureImageView
 import no.finn.granite.R
 import no.finn.granite.data.model.GalleryData
 
@@ -22,7 +21,7 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
 
     // region View Holder
     class ImagePageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView by lazy { view.findViewById<ImageView>(R.id.row_image_gallery_image) }
+        val imageView: GestureImageView by lazy { view.findViewById<GestureImageView>(R.id.row_image_gallery_image) }
     }
     // endregion
 
@@ -47,12 +46,6 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
         holder.imageView.setOnClickListener { onImageClicked?.invoke() }
 
         lastPosition = position
-    }
-    // endregion
-
-    // region Detachment
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
     }
     // endregion
 

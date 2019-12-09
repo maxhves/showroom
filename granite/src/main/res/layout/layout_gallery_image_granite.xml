@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/gradient_background_thumbnails">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/thumbnail_recycler"
             android:layout_width="match_parent"
@@ -80,7 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
-        android:background="@android:color/transparent"
+        android:background="@drawable/gradient_background_toolbar"
         android:theme="@style/Toolbar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

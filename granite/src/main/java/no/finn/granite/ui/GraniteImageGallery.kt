@@ -189,6 +189,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region Counter Updates
+    @SuppressWarnings("SetTextI18n")
     private fun updateCounter(position: Int) {
         counter.text = "(${position + 1}/${galleryData.size})"
     }

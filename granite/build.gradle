@@ -55,4 +55,7 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil:0.8.0")
 
+    // Gesture views
+    implementation 'com.alexvasilkov:gesture-views:2.5.2'
+
 }
