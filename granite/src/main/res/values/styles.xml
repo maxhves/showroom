@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Toolbar -->
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlHighlight">#80FFFFFF</item>
+    </style>
+
+</resources>

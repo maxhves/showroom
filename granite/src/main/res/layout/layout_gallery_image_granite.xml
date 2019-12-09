@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light">
+    android:background="#000000">
 
     <!-- Image Recycler View -->
     <androidx.viewpager2.widget.ViewPager2
@@ -43,10 +43,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Just another description ready to be read"
-        android:padding="4dp"
         android:layout_marginBottom="8dp"
         android:textColor="@android:color/white"
-        android:background="#000"
+        android:background="@drawable/background_text_detail"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/image_counter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -57,10 +60,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="(1/10)"
-        android:padding="4dp"
         android:layout_marginBottom="16dp"
         android:textColor="@android:color/white"
-        android:background="#000"
+        android:background="@drawable/background_text_detail"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/thumbnail_recycler_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -74,6 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
-        android:background="@android:color/holo_red_dark"/>
+        android:background="@android:color/transparent"
+        android:theme="@style/Toolbar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

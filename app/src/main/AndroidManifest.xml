@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="no.finn.granite">
 
+    <!-- Internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application

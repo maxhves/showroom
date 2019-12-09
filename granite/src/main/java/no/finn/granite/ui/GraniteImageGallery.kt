@@ -104,6 +104,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 thumbnailRecycler.smoothScrollToPosition(position)
+                setThumbnailAsSelected(position)
             }
         })
     }
@@ -117,7 +118,10 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
         thumbnailRecyclerAdapter.onThumbnailClicked = { position ->
             imageViewPager.setCurrentItem(position, false)
+            setThumbnailAsSelected(position)
         }
+
+        setThumbnailAsSelected(0)
     }
 
     private fun setupToolbar() {
@@ -167,6 +171,32 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             .translationY(if (hide) thumbnailRecyclerContainer.height.toFloat() else 0f)
             .setDuration(250L)
             .start()
+    }
+    // endregion
+
+    // region Thumbnail Selection
+    private fun setThumbnailAsSelected(position: Int) {
+        if (position <= galleryData.size && position >= 0) {
+            updateCounter(position)
+            updateDescription(position)
+
+            galleryData.find { it.selected }?.selected = false
+
+            galleryData[position].selected = true
+            thumbnailRecyclerAdapter.notifyDataSetChanged()
+        }
+    }
+    // endregion
+
+    // region Counter Updates
+    private fun updateCounter(position: Int) {
+        counter.text = "(${position + 1}/${galleryData.size})"
+    }
+    // endregion
+
+    // region Description Updates
+    private fun updateDescription(position: Int) {
+        description.text = galleryData[position].description
     }
     // endregion
 
