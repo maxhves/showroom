@@ -13,9 +13,6 @@ class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
     RecyclerView.Adapter<ThumbnailRecyclerAdapter.ThumbnailViewHolder>() {
 
     var onThumbnailClicked: ((position: Int) -> Unit)? = null
-    // region Properties
-//    private val onImageClickedSubject: PublishSubject<Int> = PublishSubject.create()
-    // endregion
 
     // region View Holder
     class ThumbnailViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -42,28 +39,14 @@ class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
 
         if (item.selected) { holder.borderView.visibility = View.VISIBLE }
 
-        holder.imageView.load(item.image)
+        holder.imageView.load(item.image) { crossfade(true) }
 
         holder.itemView.setOnClickListener { onThumbnailClicked?.invoke(position) }
-
-        //Glide.with(holder.itemView.context).load(item.image).into(holder.imageView)
-
-        //holder.itemView.setOnClickListener { onImageClickedSubject.onNext(position) }
-
-        //if ((position + 1) == galleryData.size && item.selected) { holder.lastItemView.visibility = View.VISIBLE }
     }
-    // endregion
-
-    // region Detachment
-//    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-//        super.onDetachedFromRecyclerView(recyclerView)
-//    }
     // endregion
 
     // region Accessors
     override fun getItemCount() = galleryData.size
-
-//    fun imageOnClicked() = onImageClickedSubject
     // endregion
 
 }

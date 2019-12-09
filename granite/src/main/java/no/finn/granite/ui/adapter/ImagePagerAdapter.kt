@@ -15,10 +15,6 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
     var onImageClicked: (() -> Unit)? = null
     private var lastPosition: Int = 0
 
-    // region Properties
-    //private val onImageClickedSubject: PublishSubject<GalleryData> = PublishSubject.create()
-    // endregion
-
     // region View Holder
     class ImagePageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val imageView: GestureImageView by lazy { view.findViewById<GestureImageView>(R.id.row_image_gallery_image) }
@@ -41,7 +37,7 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
 
         val item = galleryData[position]
 
-        holder.imageView.load(item.image)
+        holder.imageView.load(item.image) { crossfade(true) }
 
         holder.imageView.setOnClickListener { onImageClicked?.invoke() }
 
