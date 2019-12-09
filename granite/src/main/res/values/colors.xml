@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <color name="pagerContrastGradient">#66000000</color>
+    <color name="textDetailBackground">#80000000</color>
+
+</resources>

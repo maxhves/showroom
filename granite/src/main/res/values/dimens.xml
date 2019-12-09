@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Thumbnail -->
+    <dimen name="thumbnail_height">90dp</dimen>
+    <dimen name="thumbnail_width">120dp</dimen>
+
+    <!-- Margin -->
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_minimum">2dp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_extra_small">4dp</dimen>
+
+    <!-- Radius -->
+    <dimen name="radius_medium">12dp</dimen>
+
+</resources>

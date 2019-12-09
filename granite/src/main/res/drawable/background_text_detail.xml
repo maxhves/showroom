@@ -4,10 +4,10 @@
 
     <!-- Color -->
     <solid
-        android:color="#80000000"/>
+        android:color="@color/textDetailBackground"/>
 
     <!-- Corners -->
     <corners
-        android:radius="12dp"/>
+        android:radius="@dimen/radius_medium"/>
 
 </shape>

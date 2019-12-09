@@ -4,7 +4,7 @@
 
     <!-- Gradient -->
     <gradient
-        android:startColor="#66000000"
+        android:startColor="@color/pagerContrastGradient"
         android:endColor="@android:color/transparent"
         android:angle="90"/>
 

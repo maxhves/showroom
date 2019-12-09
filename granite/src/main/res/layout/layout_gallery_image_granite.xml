@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="@android:color/black"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Image Recycler View -->
     <androidx.viewpager2.widget.ViewPager2
@@ -30,8 +31,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/thumbnail_recycler"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="@dimen/thumbnail_height"
+            android:layout_marginBottom="@dimen/margin_normal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,14 +44,14 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Just another description ready to be read"
-        android:layout_marginBottom="8dp"
+        tools:text="Just another description ready to be read"
+        android:layout_marginBottom="@dimen/margin_small"
         android:textColor="@android:color/white"
         android:background="@drawable/background_text_detail"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
+        android:paddingStart="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingTop="@dimen/padding_extra_small"
+        android:paddingBottom="@dimen/padding_extra_small"
         app:layout_constraintBottom_toTopOf="@+id/image_counter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -60,14 +61,14 @@
         android:id="@+id/image_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(1/10)"
-        android:layout_marginBottom="16dp"
+        tools:text="(1/10)"
+        android:layout_marginBottom="@dimen/margin_normal"
         android:textColor="@android:color/white"
         android:background="@drawable/background_text_detail"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
+        android:paddingStart="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingTop="@dimen/padding_extra_small"
+        android:paddingBottom="@dimen/padding_extra_small"
         app:layout_constraintBottom_toTopOf="@+id/thumbnail_recycler_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
