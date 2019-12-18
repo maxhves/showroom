@@ -129,7 +129,10 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     }
 
     private fun setupToolbar() {
-        toolbar.setNavigationOnClickListener {  }
+        parentActivity.setSupportActionBar(toolbar)
+        parentActivity.supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
     // endregion
 
