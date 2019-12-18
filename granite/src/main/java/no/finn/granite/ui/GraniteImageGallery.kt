@@ -47,7 +47,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private var isFullscreen: Boolean = false
     // endregion
 
-    // region IO Events
+    // region IO Event Properties
     private var onBackNavigationPressed: ((position: Int) -> Unit)? = null
     // endregion
 
@@ -219,7 +219,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     }
     // endregion
 
-    // region IO
+    // region IO Events
     fun setBackPressedEvent(backPressedEvent: ((position: Int) -> Unit)) {
         onBackNavigationPressed = backPressedEvent
     }
