@@ -47,6 +47,10 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private var isFullscreen: Boolean = false
     // endregion
 
+    // region IO Events
+    private var onBackNavigationPressed: ((position: Int) -> Unit)? = null
+    // endregion
+
     // region Initialisation
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_gallery_image_granite, this)
@@ -133,6 +137,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         parentActivity.supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
         }
+
+        toolbar.setNavigationOnClickListener { onBackNavigationPressed?.invoke(0) }
     }
     // endregion
 
@@ -205,6 +211,12 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // region Description Updates
     private fun updateDescription(position: Int) {
         description.text = galleryData[position].description
+    }
+    // endregion
+
+    // region IO
+    fun setBackPressedEvent(backPressedEvent: ((position: Int) -> Unit)) {
+        onBackNavigationPressed = backPressedEvent
     }
     // endregion
 
