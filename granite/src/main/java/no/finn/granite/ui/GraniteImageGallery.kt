@@ -138,7 +138,9 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             setDisplayHomeAsUpEnabled(true)
         }
 
-        toolbar.setNavigationOnClickListener { onBackNavigationPressed?.invoke(0) }
+        toolbar.setNavigationOnClickListener {
+            onBackNavigationPressed?.invoke(galleryData.indexOf(galleryData.first { it.selected }))
+        }
     }
     // endregion
 
