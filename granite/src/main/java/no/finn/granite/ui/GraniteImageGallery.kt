@@ -212,7 +212,10 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     // region Description Updates
     private fun updateDescription(position: Int) {
-        description.text = galleryData[position].description
+        val text = galleryData[position].description
+
+        description.visibility =  if (text.isNullOrBlank()) View.INVISIBLE else View.VISIBLE
+        description.text = text
     }
     // endregion
 

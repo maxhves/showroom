@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             "https://images.finncdn.no/dynamic/1600w/2019/12/vertical-2/03/8/164/776/798_1905306971.jpg"
         ),
         GalleryData(
-            "Ten",
+            "",
             "https://images.finncdn.no/dynamic/1280w/2019/12/vertical-2/03/8/164/776/798_2033072057.jpg"
         )
     )
