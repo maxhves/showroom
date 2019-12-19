@@ -138,7 +138,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         parentActivity.supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowTitleEnabled(false)
-            setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         }
 
         toolbar.setNavigationOnClickListener {

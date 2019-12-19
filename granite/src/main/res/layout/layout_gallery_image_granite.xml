@@ -82,6 +82,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/gradient_background_toolbar"
-        android:theme="@style/Toolbar"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
