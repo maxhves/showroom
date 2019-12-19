@@ -24,6 +24,7 @@ import no.finn.granite.R
 import no.finn.granite.data.model.GalleryData
 import no.finn.granite.ui.adapter.ImagePagerAdapter
 import no.finn.granite.ui.adapter.ThumbnailRecyclerAdapter
+import no.finn.granite.util.GraniteActivityUtils
 import okhttp3.OkHttpClient
 
 class GraniteImageGallery
@@ -146,22 +147,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     // region Show/Hide System UI
     private fun setSystemUi(hide: Boolean) {
-        when (hide) {
-            true -> {
-                parentActivity.window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
-                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_FULLSCREEN)
-            }
-            false -> {
-                parentActivity.window.decorView.systemUiVisibility =
-                    (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
-            }
-        }
+        GraniteActivityUtils.setSystemUiForActivity(parentActivity, hide)
 
         ViewCompat
             .animate(toolbar)

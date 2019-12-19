@@ -27,6 +27,30 @@ class GraniteActivityUtils {
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
 
+        /**
+         * Set the correct system ui state for a given activity.
+         * @param activity The activity for setting the system ui.
+         * @param hide True if the system ui should be hidden else false.
+         */
+        fun setSystemUiForActivity(activity: AppCompatActivity, hide: Boolean) {
+            when (hide) {
+                true -> {
+                    activity.window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_FULLSCREEN)
+                }
+                false -> {
+                    activity.window.decorView.systemUiVisibility =
+                        (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+                }
+            }
+        }
+
     }
     // endregion
 
