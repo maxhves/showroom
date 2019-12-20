@@ -60,4 +60,7 @@ dependencies {
     // Gesture views
     implementation 'com.alexvasilkov:gesture-views:2.5.2'
 
+    // Touch Image View
+    implementation 'com.github.MikeOrtiz:TouchImageView:2.3.1'
+
 }

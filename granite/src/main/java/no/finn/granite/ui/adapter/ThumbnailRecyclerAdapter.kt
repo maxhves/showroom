@@ -39,7 +39,7 @@ class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
 
         if (item.selected) { holder.borderView.visibility = View.VISIBLE }
 
-        holder.imageView.load(item.image) { crossfade(true) }
+        holder.imageView.load(item.downscaledImage?: item.image) { crossfade(true) }
 
         holder.itemView.setOnClickListener { onThumbnailClicked?.invoke(position) }
     }

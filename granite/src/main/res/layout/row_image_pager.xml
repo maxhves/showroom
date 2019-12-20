@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/row_image_pager_parent"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/row_image_pager_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Image -->
-    <com.alexvasilkov.gestures.views.GestureImageView
+<!--    <com.alexvasilkov.gestures.views.GestureImageView-->
+<!--        android:id="@+id/row_image_gallery_image"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
+
+    <com.ortiz.touchview.TouchImageView
         android:id="@+id/row_image_gallery_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

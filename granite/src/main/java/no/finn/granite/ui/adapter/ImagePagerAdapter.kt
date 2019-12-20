@@ -1,11 +1,13 @@
 package no.finn.granite.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat.canScrollHorizontally
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
-import com.alexvasilkov.gestures.views.GestureImageView
+import com.ortiz.touchview.TouchImageView
 import no.finn.granite.R
 import no.finn.granite.data.model.GalleryData
 
@@ -17,7 +19,7 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
 
     // region View Holder
     class ImagePageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: GestureImageView by lazy { view.findViewById<GestureImageView>(R.id.row_image_gallery_image) }
+        val imageView: TouchImageView by lazy { view.findViewById<TouchImageView>(R.id.row_image_gallery_image) }
     }
     // endregion
 
@@ -42,6 +44,26 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
         holder.imageView.setOnClickListener { onImageClicked?.invoke() }
 
         lastPosition = position
+
+        holder.imageView.setOnTouchListener { view, event ->
+            var result = true
+
+            if (event.pointerCount >= 2 || view.canScrollHorizontally(1) && canScrollHorizontally(view, -1)) {
+                result = when (event.action) {
+                    MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
+                        holder.imageView.parent.requestDisallowInterceptTouchEvent(true)
+                        false
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        holder.imageView.parent.requestDisallowInterceptTouchEvent(false)
+                        true
+                    }
+                    else -> true
+                }
+            }
+            result
+        }
+
     }
     // endregion
 
