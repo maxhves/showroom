@@ -183,8 +183,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             updateDescription(position)
 
             galleryData.find { it.selected }?.selected = false
-
             galleryData[position].selected = true
+
             thumbnailRecyclerAdapter.notifyDataSetChanged()
         }
     }

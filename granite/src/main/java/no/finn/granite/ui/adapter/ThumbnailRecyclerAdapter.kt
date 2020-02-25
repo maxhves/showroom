@@ -33,11 +33,12 @@ class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
     }
 
     override fun onBindViewHolder(holder: ThumbnailViewHolder, position: Int) {
-        holder.setIsRecyclable(false)
-
         val item = galleryData[position]
 
-        if (item.selected) { holder.borderView.visibility = View.VISIBLE }
+        holder.borderView.visibility = when (item.selected) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
 
         holder.imageView.load(item.downscaledImage?: item.image) { crossfade(true) }
 
@@ -47,6 +48,8 @@ class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
 
     // region Accessors
     override fun getItemCount() = galleryData.size
+
+    override fun getItemViewType(position: Int) = position
     // endregion
 
 }
