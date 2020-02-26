@@ -17,15 +17,11 @@ import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import coil.Coil
-import coil.ImageLoader
-import coil.util.CoilUtils
 import no.finn.granite.R
 import no.finn.granite.data.model.GalleryData
 import no.finn.granite.ui.adapter.ImagePagerAdapter
 import no.finn.granite.ui.adapter.ThumbnailRecyclerAdapter
 import no.finn.granite.util.GraniteActivityUtils
-import okhttp3.OkHttpClient
 
 class GraniteImageGallery
 constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {

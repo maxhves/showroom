@@ -46,16 +46,19 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Recycler View
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:$recycler_version"
 
     // View Pager 2
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation "androidx.viewpager2:viewpager2:$viewpager_version"
 
     // Constraint Layout
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
-    // Coil
-    implementation("io.coil-kt:coil:0.8.0")
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
+    
+    // Glide
+    annotationProcessor("com.github.bumptech.glide:compiler:$glide_version")
+    implementation("com.github.bumptech.glide:glide:$glide_version")
+    implementation("com.github.bumptech.glide:okhttp3-integration:$glide_version")
+    implementation("com.github.bumptech.glide:recyclerview-integration:$glide_version")
 
     // Gesture views
     implementation 'com.alexvasilkov:gesture-views:2.5.2'
