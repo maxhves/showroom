@@ -40,7 +40,7 @@ class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
             false -> View.GONE
         }
 
-        Glide.with(holder.itemView.context).load(item.image).into(holder.imageView)
+        Glide.with(holder.itemView.context).load(item.downscaledImage ?: item.image).into(holder.imageView)
 
         holder.itemView.setOnClickListener { onThumbnailClicked?.invoke(position) }
     }
