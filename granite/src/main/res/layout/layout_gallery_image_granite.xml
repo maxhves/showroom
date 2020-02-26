@@ -40,21 +40,28 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Description -->
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Just another description ready to be read"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:textColor="@android:color/white"
-        android:background="@drawable/background_text_detail"
-        android:paddingStart="@dimen/padding_small"
-        android:paddingEnd="@dimen/padding_small"
-        android:paddingTop="@dimen/padding_extra_small"
-        android:paddingBottom="@dimen/padding_extra_small"
         app:layout_constraintBottom_toTopOf="@+id/image_counter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="@dimen/margin_large"
+        android:paddingEnd="@dimen/margin_large"
+        android:paddingBottom="@dimen/margin_normal">
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Just another description ready to be read"
+            android:textColor="@android:color/white"
+            android:background="@drawable/background_text_detail"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
+            android:paddingTop="@dimen/padding_extra_small"
+            android:paddingBottom="@dimen/padding_extra_small"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
     <!-- Image Count -->
     <TextView

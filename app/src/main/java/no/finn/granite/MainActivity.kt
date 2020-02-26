@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     private val imageGallery: GraniteImageGallery by lazy { findViewById<GraniteImageGallery>(R.id.gallery_image) }
     private val testGalleryData: List<GalleryData> = listOf(
         GalleryData(
-            "One",
+            "One: this is just a really really long description text that needs to go on forever and ever and ever just so I can see if I can fit the text on the screen or whether it doens't actually fit.",
             "https://images.finncdn.no/dynamic/1280w/2019/12/vertical-2/03/8/164/776/798_624463418.jpg",
             downscaledImage = "https://images.finncdn.no/dynamic/480w/2019/12/vertical-2/03/8/164/776/798_624463418.jpg"
         ),
