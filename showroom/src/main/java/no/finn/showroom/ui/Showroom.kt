@@ -33,8 +33,13 @@ import no.finn.showroom.ui.adapter.ThumbnailRecyclerAdapter
 import no.finn.showroom.util.showroomActivityUtils
 import okhttp3.OkHttpClient
 
+// region Static Constants
+private const val ANIM_DURATION: Long = 250L
+private const val MAX_ALPHA: Float = 1f
+private const val MIN_ALPHA: Float = 0f
+// endregion
 
-class showroomImageGallery
+class Showroom
 constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     // region Properties
@@ -192,26 +197,26 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
         ViewCompat
             .animate(toolbar)
-            .alpha(if (hide) 0f else 1f)
-            .setDuration(250L)
+            .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
+            .setDuration(ANIM_DURATION)
             .start()
 
         ViewCompat
             .animate(description)
-            .alpha(if (hide) 0f else 1f)
-            .setDuration(250L)
+            .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
+            .setDuration(ANIM_DURATION)
             .start()
 
         ViewCompat
             .animate(counter)
-            .alpha(if (hide) 0f else 1f)
-            .setDuration(250L)
+            .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
+            .setDuration(ANIM_DURATION)
             .start()
 
         ViewCompat
             .animate(thumbnailRecyclerContainer)
             .translationY(if (hide) thumbnailRecyclerContainer.height.toFloat() else 0f)
-            .setDuration(250L)
+            .setDuration(ANIM_DURATION)
             .start()
     }
     // endregion

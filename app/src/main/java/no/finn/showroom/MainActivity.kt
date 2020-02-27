@@ -3,12 +3,12 @@ package no.finn.showroom
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import no.finn.showroom.data.model.GalleryData
-import no.finn.showroom.ui.showroomImageGallery
+import no.finn.showroom.ui.Showroom
 
 class MainActivity : AppCompatActivity() {
 
     // region Properties
-    private val imageGallery: showroomImageGallery by lazy { findViewById<showroomImageGallery>(R.id.gallery_image) }
+    private val imageGallery: Showroom by lazy { findViewById<Showroom>(R.id.gallery_image) }
     private val testGalleryData: List<GalleryData> = listOf(
         GalleryData(
             "One: this is just a really really long description text that needs to go on forever and ever and ever just so I can see if I can fit the text on the screen or whether it doens't actually fit.",
