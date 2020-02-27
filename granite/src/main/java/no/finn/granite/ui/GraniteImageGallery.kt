@@ -20,7 +20,12 @@ import androidx.viewpager2.widget.ViewPager2
 import coil.Coil
 import coil.ImageLoader
 import coil.api.load
+import coil.request.CachePolicy
 import coil.util.CoilUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import no.finn.granite.R
 import no.finn.granite.data.model.GalleryData
 import no.finn.granite.ui.adapter.ImagePagerAdapter
@@ -80,9 +85,19 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         galleryData = data
         setupViews()
 
-        galleryData.forEach {
-            Coil.load(context, it.image)
-            Coil.load(context, it.downscaledImage)
+        CoroutineScope(Dispatchers.IO).launch { preload() }
+    }
+
+    private suspend fun preload() {
+        withContext(Dispatchers.IO) {
+            galleryData.forEach {
+                Coil.load(context, it.image) {
+                    memoryCachePolicy(CachePolicy.DISABLED)
+                }
+                Coil.load(context, it.downscaledImage) {
+                    memoryCachePolicy(CachePolicy.DISABLED)
+                }
+            }
         }
     }
 
