@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Granite Image Gallery -->
-    <no.finn.granite.ui.GraniteImageGallery
+    <!-- showroom Image Gallery -->
+    <no.finn.showroom.ui.showroomImageGallery
         android:id="@+id/gallery_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
