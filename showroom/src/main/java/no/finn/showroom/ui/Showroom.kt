@@ -57,6 +57,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private lateinit var galleryData: List<GalleryData>
     private lateinit var imagePagerAdapter: ImagePagerAdapter
     private lateinit var thumbnailRecyclerAdapter: ThumbnailRecyclerAdapter
+    private var initialPosition: Int = 0
     private var isFullscreen: Boolean = false
     // endregion
 
@@ -84,9 +85,10 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region View Setup
-    fun attachToActivity(activity: AppCompatActivity, data: List<GalleryData>) {
+    fun attach(activity: AppCompatActivity, data: List<GalleryData>, openAtIndex: Int = 0) {
         parentActivity = activity
         galleryData = data
+        initialPosition = openAtIndex - 1
         setupViews()
 
         CoroutineScope(Dispatchers.IO).launch { preload() }
@@ -115,6 +117,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         setupImageViewPager()
         setupThumbnailRecycler()
         setupToolbar()
+        setInitialPositionIfApplicable()
     }
 
     private fun setupLayoutDisplayCutoutMode() {
@@ -162,7 +165,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         })
     }
 
-
     private fun setupThumbnailRecycler() {
         thumbnailRecyclerAdapter = ThumbnailRecyclerAdapter(galleryData)
         thumbnailRecycler.apply {
@@ -176,6 +178,13 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         setThumbnailAsSelected(0)
+    }
+
+    private fun setInitialPositionIfApplicable() {
+        if (initialPosition > 0 && initialPosition < galleryData.size) {
+            imageViewPager.setCurrentItem(initialPosition, false)
+            setThumbnailAsSelected(initialPosition)
+        }
     }
 
     private fun setupToolbar() {
