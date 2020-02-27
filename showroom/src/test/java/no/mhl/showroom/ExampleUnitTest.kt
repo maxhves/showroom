@@ -1,4 +1,4 @@
-package no.finn.showroom
+package no.mhl.showroom
 
 import org.junit.Test
 

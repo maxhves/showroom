@@ -1,12 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.maxhvesser'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
 
     defaultConfig {
         minSdkVersion 21
@@ -15,7 +12,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,17 +30,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'
-    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
 
     // Recycler View
     implementation "androidx.recyclerview:recyclerview:$recycler_version"
@@ -55,8 +52,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
 
     // Coil
-    implementation("io.coil-kt:coil:0.9.5")
+    implementation "io.coil-kt:coil:$coil_version"
 
     // Gesture views
-    implementation 'com.alexvasilkov:gesture-views:2.5.2'
+    implementation "com.alexvasilkov:gesture-views:$gestureviews_version"
 }

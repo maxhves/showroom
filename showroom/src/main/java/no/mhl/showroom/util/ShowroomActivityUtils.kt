@@ -1,11 +1,11 @@
-package no.finn.showroom.util
+package no.mhl.showroom.util
 
 import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
-class showroomActivityUtils {
+class ShowRoomActivityUtils {
 
     // region Static Functions and Properties
     companion object {

@@ -1,4 +1,4 @@
-package no.finn.showroom.ui.adapter
+package no.mhl.showroom.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.alexvasilkov.gestures.views.GestureImageView
-import no.finn.showroom.R
-import no.finn.showroom.data.model.GalleryData
+import no.mhl.showroom.R
+import no.mhl.showroom.data.model.GalleryData
 
 class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
     RecyclerView.Adapter<ImagePagerAdapter.ImagePageViewHolder>() {

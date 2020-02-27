@@ -1,4 +1,4 @@
-package no.finn.showroom.ui
+package no.mhl.showroom.ui
 
 import android.content.Context
 import android.graphics.Color
@@ -26,11 +26,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import no.finn.showroom.R
-import no.finn.showroom.data.model.GalleryData
-import no.finn.showroom.ui.adapter.ImagePagerAdapter
-import no.finn.showroom.ui.adapter.ThumbnailRecyclerAdapter
-import no.finn.showroom.util.showroomActivityUtils
+import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.ui.adapter.ImagePagerAdapter
+import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
+import no.mhl.showroom.R
+import no.mhl.showroom.util.ShowRoomActivityUtils
 import okhttp3.OkHttpClient
 
 // region Static Constants
@@ -203,7 +203,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     // region Show/Hide System UI
     private fun setSystemUi(hide: Boolean) {
-        showroomActivityUtils.setSystemUiForActivity(parentActivity, hide)
+        ShowRoomActivityUtils.setSystemUiForActivity(parentActivity, hide)
 
         ViewCompat
             .animate(toolbar)

@@ -1,3 +1,3 @@
-rootProject.name='showroom'
-include ':app'
 include ':showroom'
+include ':app'
+rootProject.name = "Showroom"

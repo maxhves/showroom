@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Showroom.iml" filepath="$PROJECT_DIR$/Showroom.iml" group="Granite" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Showroom-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Showroom-app.iml" group="showroom/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Android-Showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/Android-Showroom.iml" group="Showroom" />
+      <module fileurl="file://$PROJECT_DIR$/Showroom.iml" filepath="$PROJECT_DIR$/Showroom.iml" group="Granite/d" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Showroom-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Showroom-app.iml" group="Showroom/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/Showroom-showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/Showroom-showroom.iml" group="Showroom/showroom" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Granite/app" />
       <module fileurl="file://$PROJECT_DIR$/granite/granite.iml" filepath="$PROJECT_DIR$/granite/granite.iml" group="Granite/granite" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom.iml" group="showroom" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/showroom-showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/showroom-showroom.iml" group="showroom/showroom" />
     </modules>
   </component>
 </project>

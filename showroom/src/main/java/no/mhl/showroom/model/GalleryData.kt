@@ -1,4 +1,4 @@
-package no.finn.showroom.data.model
+package no.mhl.showroom.data.model
 
 data class GalleryData (
     val description: String? = null,

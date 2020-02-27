@@ -1,4 +1,4 @@
-package no.finn.showroom.ui.adapter
+package no.mhl.showroom.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
-import no.finn.showroom.R
-import no.finn.showroom.data.model.GalleryData
+import no.mhl.showroom.R
+import no.mhl.showroom.data.model.GalleryData
 
 class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
     RecyclerView.Adapter<ThumbnailRecyclerAdapter.ThumbnailViewHolder>() {
