@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.api.load
 import no.finn.granite.R
 import no.finn.granite.data.model.GalleryData
 
@@ -40,7 +40,7 @@ class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
             false -> View.GONE
         }
 
-        Glide.with(holder.itemView.context).load(item.downscaledImage ?: item.image).into(holder.imageView)
+        holder.imageView.load(item.downscaledImage ?: item.image)
 
         holder.itemView.setOnClickListener { onThumbnailClicked?.invoke(position) }
     }

@@ -17,11 +17,17 @@ import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import coil.Coil
+import coil.ImageLoader
+import coil.api.load
+import coil.util.CoilUtils
 import no.finn.granite.R
 import no.finn.granite.data.model.GalleryData
 import no.finn.granite.ui.adapter.ImagePagerAdapter
 import no.finn.granite.ui.adapter.ThumbnailRecyclerAdapter
 import no.finn.granite.util.GraniteActivityUtils
+import okhttp3.OkHttpClient
+
 
 class GraniteImageGallery
 constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
@@ -51,6 +57,20 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // region Initialisation
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_gallery_image_granite, this)
+        setupCoil()
+    }
+
+    private fun setupCoil() {
+        Coil.setDefaultImageLoader {
+            ImageLoader(context) {
+                crossfade(true)
+                okHttpClient {
+                    OkHttpClient.Builder()
+                        .cache(CoilUtils.createDefaultCache(context))
+                        .build()
+                }
+            }
+        }
     }
     // endregion
 
@@ -59,6 +79,11 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         parentActivity = activity
         galleryData = data
         setupViews()
+
+        galleryData.forEach {
+            Coil.load(context, it.image)
+            Coil.load(context, it.downscaledImage)
+        }
     }
 
     private fun setupViews() {
@@ -113,6 +138,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             }
         })
     }
+
 
     private fun setupThumbnailRecycler() {
         thumbnailRecyclerAdapter = ThumbnailRecyclerAdapter(galleryData)

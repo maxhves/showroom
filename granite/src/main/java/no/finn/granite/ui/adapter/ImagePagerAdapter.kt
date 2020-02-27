@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.alexvasilkov.gestures.views.GestureImageView
-import com.bumptech.glide.Glide
 import no.finn.granite.R
 import no.finn.granite.data.model.GalleryData
 
@@ -37,7 +37,7 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
     override fun onBindViewHolder(holder: ImagePageViewHolder, position: Int) {
         val item = galleryData[position]
 
-        Glide.with(holder.itemView.context).load(item.image).into(holder.imageView)
+        holder.imageView.load(item.image)
 
         holder.imageView.setOnClickListener { onImageClicked?.invoke() }
 
