@@ -183,6 +183,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun setInitialPositionIfApplicable() {
         if (initialPosition > 0 && initialPosition < galleryData.size) {
             imageViewPager.setCurrentItem(initialPosition, false)
+            thumbnailRecycler.scrollToPosition(initialPosition)
             setThumbnailAsSelected(initialPosition)
         }
     }

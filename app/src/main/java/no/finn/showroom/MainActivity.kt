@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     // region View Setup
     private fun setupView() {
-        imageGallery.attach(this, testGalleryData, 3)
+        imageGallery.attach(this, testGalleryData)
         imageGallery.setBackPressedEvent { finish() }
     }
     // endregion
