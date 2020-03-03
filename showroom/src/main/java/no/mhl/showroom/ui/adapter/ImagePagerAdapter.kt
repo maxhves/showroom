@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.alexvasilkov.gestures.views.GestureImageView
 import no.mhl.showroom.R
 import no.mhl.showroom.data.model.GalleryData
@@ -17,7 +18,7 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
     private var lastPosition: Int = 0
 
     // region View Holder
-    class ImagePageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class ImagePageViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val imageView: GestureImageView by lazy { view.findViewById<GestureImageView>(R.id.row_image_gallery_image) }
     }
     // endregion
@@ -37,7 +38,9 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
     override fun onBindViewHolder(holder: ImagePageViewHolder, position: Int) {
         val item = galleryData[position]
 
-        holder.imageView.load(item.image)
+        holder.imageView.load(item.image) {
+
+        }
 
         holder.imageView.setOnClickListener { onImageClicked?.invoke() }
 

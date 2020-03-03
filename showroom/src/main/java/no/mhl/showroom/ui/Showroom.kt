@@ -37,6 +37,7 @@ import okhttp3.OkHttpClient
 private const val ANIM_DURATION: Long = 250L
 private const val MAX_ALPHA: Float = 1f
 private const val MIN_ALPHA: Float = 0f
+private const val PRELOAD_IMAGE_LIMIT: Int = 3
 // endregion
 
 class Showroom
@@ -90,25 +91,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         galleryData = data
         initialPosition = openAtIndex - 1
         setupViews()
-
-        CoroutineScope(Dispatchers.IO).launch { preload() }
-    }
-
-    /**
-     * This is an early stage implementation and will instead be placed into a scrolling function
-     * for the image recyclers.
-     */
-    private suspend fun preload() {
-        withContext(Dispatchers.IO) {
-            galleryData.forEach {
-                Coil.load(context, it.image) {
-                    memoryCachePolicy(CachePolicy.DISABLED)
-                }
-                Coil.load(context, it.downscaledImage) {
-                    memoryCachePolicy(CachePolicy.DISABLED)
-                }
-            }
-        }
     }
 
     private fun setupViews() {
@@ -150,6 +132,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         imagePagerAdapter = ImagePagerAdapter(galleryData)
         imageViewPager.apply {
             adapter = imagePagerAdapter
+            offscreenPageLimit = PRELOAD_IMAGE_LIMIT.toInt()
         }
 
         imagePagerAdapter.onImageClicked = {
@@ -161,8 +144,27 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             override fun onPageSelected(position: Int) {
                 thumbnailRecycler.smoothScrollToPosition(position)
                 setThumbnailAsSelected(position)
+
+                CoroutineScope(Dispatchers.IO).launch { preloadUpcomingImages(position) }
             }
         })
+    }
+
+    private suspend fun preloadUpcomingImages(position: Int) = withContext(Dispatchers.IO) {
+        when (position) {
+            0 -> {
+                for (i in 0..PRELOAD_IMAGE_LIMIT) {
+                    if (position + i < galleryData.size - 1) {
+                        Coil.load(context, galleryData[position + i].image)
+                    }
+                }
+            }
+            else ->  {
+                if (position + 1 < galleryData.size - 1) {
+                    Coil.load(context, galleryData[position + 1].image)
+                }
+            }
+        }
     }
 
     private fun setupThumbnailRecycler() {
@@ -256,7 +258,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun updateDescription(position: Int) {
         val text = galleryData[position].description
 
-        description.visibility =  if (text.isNullOrBlank()) View.INVISIBLE else View.VISIBLE
+        description.visibility = if (text.isNullOrBlank()) View.INVISIBLE else View.VISIBLE
         description.text = text
     }
     // endregion
