@@ -20,7 +20,6 @@ import androidx.viewpager2.widget.ViewPager2
 import coil.Coil
 import coil.ImageLoader
 import coil.api.load
-import coil.request.CachePolicy
 import coil.util.CoilUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -169,10 +168,14 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     private fun setupThumbnailRecycler() {
         thumbnailRecyclerAdapter = ThumbnailRecyclerAdapter(galleryData)
+        thumbnailRecyclerAdapter.apply {
+            setHasStableIds(true)
+        }
         thumbnailRecycler.apply {
             setHasFixedSize(true)
             adapter = thumbnailRecyclerAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setItemViewCacheSize(PRELOAD_IMAGE_LIMIT * 2)
         }
         thumbnailRecyclerAdapter.onThumbnailClicked = { position ->
             imageViewPager.setCurrentItem(position, false)
