@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
         ),
         GalleryData(
             "Six",
-            "https://images.finncdn.no/dynamic/1280w/2019/12/vertical-2/03/8/164/776/798_1944119106.jpg",
-            downscaledImage = "https://images.finncdn.no/dynamic/480w/2019/12/vertical-2/03/8/164/776/798_1944119106.jpg"
+            "https://images.finncdn.no/dynamic/1280w/2019/12/vertical-2/",
+            downscaledImage = "https://images.finncdn.no/dynamic/480w/2019/12/vertical-2/"
         ),
         GalleryData(
             "Seven",

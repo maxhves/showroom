@@ -74,6 +74,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun setupCoil() {
         Coil.setDefaultImageLoader {
             ImageLoader(context) {
+                crossfade(true)
                 okHttpClient {
                     OkHttpClient.Builder()
                         .cache(CoilUtils.createDefaultCache(context))
@@ -155,12 +156,14 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
                 for (i in 0..PRELOAD_IMAGE_LIMIT) {
                     if (position + i < galleryData.size - 1) {
                         Coil.load(context, galleryData[position + i].image)
+                        Coil.load(context, galleryData[position + i].downscaledImage)
                     }
                 }
             }
             else ->  {
                 if (position + 1 < galleryData.size - 1) {
                     Coil.load(context, galleryData[position + 1].image)
+                    Coil.load(context, galleryData[position + 1].downscaledImage)
                 }
             }
         }
@@ -168,9 +171,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     private fun setupThumbnailRecycler() {
         thumbnailRecyclerAdapter = ThumbnailRecyclerAdapter(galleryData)
-        thumbnailRecyclerAdapter.apply {
-            setHasStableIds(true)
-        }
         thumbnailRecycler.apply {
             setHasFixedSize(true)
             adapter = thumbnailRecyclerAdapter
@@ -198,6 +198,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         parentActivity.supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowTitleEnabled(false)
+            setHomeAsUpIndicator(R.drawable.ic_clear)
         }
 
         toolbar.setNavigationOnClickListener {
@@ -238,14 +239,18 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     // region Thumbnail Selection
     private fun setThumbnailAsSelected(position: Int) {
-        if (position <= galleryData.size && position >= 0) {
-            updateCounter(position)
-            updateDescription(position)
+        val currentPosition = galleryData.indexOf(galleryData.find { it.selected })
 
-            galleryData.find { it.selected }?.selected = false
-            galleryData[position].selected = true
+        if (currentPosition != position) {
+            if (position <= galleryData.size && position >= 0) {
+                updateCounter(position)
+                updateDescription(position)
 
-            thumbnailRecyclerAdapter.notifyDataSetChanged()
+                galleryData.find { it.selected }?.selected = false
+                galleryData[position].selected = true
+
+                thumbnailRecyclerAdapter.notifyDataSetChanged()
+            }
         }
     }
     // endregion

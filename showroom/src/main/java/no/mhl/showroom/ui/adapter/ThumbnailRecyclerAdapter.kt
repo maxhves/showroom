@@ -40,7 +40,10 @@ class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
             false -> View.GONE
         }
 
-        holder.imageView.load(item.downscaledImage ?: item.image)
+        holder.imageView.load(item.downscaledImage ?: item.image) {
+            error(R.drawable.thumbnail_placeholder)
+            placeholder(R.drawable.thumbnail_placeholder)
+        }
 
         holder.itemView.setOnClickListener { onThumbnailClicked?.invoke(position) }
     }
