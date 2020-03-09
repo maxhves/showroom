@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- region Showroom -->
+    <string name="go_to_first_text">Go To First</string>
+    <!-- endregion -->
+
+    <!-- region Action Button -->
+    <string name="action_button_content_description">Action Button</string>
+    <!-- endregion -->
+
+    <!-- region Thumbnail -->
+    <string name="thumbnail_image_content_description">Thumbnail Image</string>
+    <string name="thumbnail_frame_content_description">Frame</string>
+    <!-- endregion -->
+
+</resources>

@@ -13,8 +13,10 @@ import no.mhl.showroom.data.model.GalleryData
 class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
     RecyclerView.Adapter<ImagePagerAdapter.ImagePageViewHolder>() {
 
+    // region Properties
     var onImageClicked: (() -> Unit)? = null
     private var lastPosition: Int = 0
+    // endregion
 
     // region View Holder
     class ImagePageViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -38,7 +40,7 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
         val item = galleryData[position]
 
         holder.imageView.load(item.image) {
-            error(R.drawable.ic_placeholder)
+            error(R.drawable.ic_error)
         }
 
         holder.imageView.setOnClickListener { onImageClicked?.invoke() }

@@ -4,5 +4,7 @@
     <!-- General -->
     <color name="pagerContrastGradient">#66000000</color>
     <color name="textDetailBackground">#80000000</color>
+    <color name="actionButtonBackground">#181818</color>
+    <color name="thumbnailPlaceholder">#252525</color>
 
 </resources>

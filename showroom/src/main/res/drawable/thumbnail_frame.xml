@@ -4,7 +4,7 @@
     android:shape="rectangle">
 
     <stroke
-        android:width="2dp"
+        android:width="@dimen/thumbnail_thickness"
         android:color="@android:color/white"/>
 
 </shape>

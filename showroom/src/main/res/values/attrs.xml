@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- region Showroom -->
+    <declare-styleable name="Showroom">
+        <attr name="fontFamilyPrimary" format="reference"/>
+        <attr name="fontFamilySecondary" format="reference"/>
+    </declare-styleable>
+    <!-- endregion -->
+
+    <!-- region Action Button -->
+    <declare-styleable name="ActionButton">
+        <attr name="icon" format="reference"/>
+        <attr name="text" format="string"/>
+    </declare-styleable>
+    <!-- endregion -->
+
+</resources>

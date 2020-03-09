@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/row_thumbnail_gallery_parent"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/row_thumbnail_gallery_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/thumbnail_width"
     android:layout_height="@dimen/thumbnail_height"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Image -->
     <ImageView
@@ -13,21 +13,27 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:layout_margin="@dimen/margin_minimum"
+        android:contentDescription="@string/thumbnail_image_content_description"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@android:color/holo_red_dark"/>
+
 
     <!-- Selection Rectangle Border -->
     <ImageView
         android:id="@+id/row_thumbnail_gallery_border"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/thumbnail_selected_rectangle"
+        android:src="@drawable/thumbnail_frame"
         android:visibility="invisible"
+        android:layout_margin="@dimen/margin_minimum"
+        android:contentDescription="@string/thumbnail_frame_content_description"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

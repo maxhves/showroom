@@ -1,7 +1,9 @@
 package no.mhl.showroom.ui
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +33,10 @@ import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
 import no.mhl.showroom.R
 import no.mhl.showroom.util.ShowRoomActivityUtils
+import no.mhl.showroom.util.indexOrigin
+import no.mhl.showroom.util.performEndOfDataSetHaptic
 import okhttp3.OkHttpClient
+import java.lang.Exception
 
 // region Static Constants
 private const val ANIM_DURATION: Long = 250L
@@ -61,6 +67,11 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private var isFullscreen: Boolean = false
     // endregion
 
+    // region Custom Attributes
+    private var fontPrimary: Typeface? = null
+    private var fontSecondary: Typeface? = null
+    // endregion
+
     // region IO Event Properties
     private var onBackNavigationPressed: ((position: Int) -> Unit)? = null
     // endregion
@@ -68,6 +79,13 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // region Initialisation
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_gallery_image_showroom, this)
+
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.Showroom,
+            0, 0
+        ).apply(::setupCustomAttributes)
+
         setupCoil()
     }
 
@@ -86,10 +104,29 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region View Setup
+    private fun setupCustomAttributes(typedArray: TypedArray) {
+        try {
+            val fontPrimaryRes = typedArray.getResourceId(R.styleable.Showroom_fontFamilyPrimary, 0)
+            val fontSecondaryRes =
+                typedArray.getResourceId(R.styleable.Showroom_fontFamilySecondary, 0)
+
+            if (fontPrimaryRes != 0) {
+                fontPrimary = ResourcesCompat.getFont(context, fontPrimaryRes)
+            }
+
+            if (fontSecondaryRes != 0) {
+                fontSecondary = ResourcesCompat.getFont(context, fontSecondaryRes)
+            }
+
+            description.typeface = fontPrimary
+            counter.typeface = fontSecondary
+        } finally { typedArray.recycle() }
+    }
+
     fun attach(activity: AppCompatActivity, data: List<GalleryData>, openAtIndex: Int = 0) {
         parentActivity = activity
         galleryData = data
-        initialPosition = openAtIndex - 1
+        initialPosition = openAtIndex.indexOrigin
         setupViews()
     }
 
@@ -154,16 +191,18 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         when (position) {
             0 -> {
                 for (i in 0..PRELOAD_IMAGE_LIMIT) {
-                    if (position + i < galleryData.size - 1) {
-                        Coil.load(context, galleryData[position + i].image)
-                        Coil.load(context, galleryData[position + i].downscaledImage)
+                    val currentItem: Int = position + i
+                    if (currentItem <= galleryData.lastIndex) {
+                        Coil.load(context, galleryData[currentItem].image)
+                        Coil.load(context, galleryData[currentItem].downscaledImage)
                     }
                 }
             }
-            else ->  {
-                if (position + 1 < galleryData.size - 1) {
-                    Coil.load(context, galleryData[position + 1].image)
-                    Coil.load(context, galleryData[position + 1].downscaledImage)
+            else -> {
+                val nextItem: Int = position + 1
+                if (nextItem <= galleryData.lastIndex) {
+                    Coil.load(context, galleryData[nextItem].image)
+                    Coil.load(context, galleryData[nextItem].downscaledImage)
                 }
             }
         }
@@ -175,7 +214,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             setHasFixedSize(true)
             adapter = thumbnailRecyclerAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            setItemViewCacheSize(PRELOAD_IMAGE_LIMIT * 2)
+            setItemViewCacheSize(PRELOAD_IMAGE_LIMIT)
         }
         thumbnailRecyclerAdapter.onThumbnailClicked = { position ->
             imageViewPager.setCurrentItem(position, false)
