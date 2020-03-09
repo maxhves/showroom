@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- region Shared Attributes -->
+    <attr name="fontFamilyPrimary" format="reference"/>
+    <attr name="fontFamilySecondary" format="reference"/>
+    <attr name="imagePreloadLimit" format="integer"/>
+    <!-- endregion -->
+
     <!-- region Showroom -->
     <declare-styleable name="Showroom">
-        <attr name="fontFamilyPrimary" format="reference"/>
-        <attr name="fontFamilySecondary" format="reference"/>
+        <attr name="fontFamilyPrimary"/>
+        <attr name="fontFamilySecondary"/>
+        <attr name="imagePreloadLimit"/>
+    </declare-styleable>
+    <!-- endregion -->
+
+    <!-- region Showroom Lite -->
+    <declare-styleable name="ShowroomLite">
+        <attr name="fontFamilyPrimary"/>
+        <attr name="fontFamilySecondary"/>
+        <attr name="imagePreloadLimit"/>
     </declare-styleable>
     <!-- endregion -->
 

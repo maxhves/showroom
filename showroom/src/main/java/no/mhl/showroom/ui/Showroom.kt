@@ -28,35 +28,33 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import no.mhl.showroom.Constants
+import no.mhl.showroom.Constants.ANIM_DURATION
+import no.mhl.showroom.Constants.MAX_ALPHA
+import no.mhl.showroom.Constants.MIN_ALPHA
 import no.mhl.showroom.data.model.GalleryData
 import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
 import no.mhl.showroom.R
+import no.mhl.showroom.data.preloadUpcomingImages
 import no.mhl.showroom.util.ShowRoomActivityUtils
 import no.mhl.showroom.util.indexOrigin
-import no.mhl.showroom.util.performEndOfDataSetHaptic
+import no.mhl.showroom.util.setCount
+import no.mhl.showroom.util.setDescription
 import okhttp3.OkHttpClient
-import java.lang.Exception
-
-// region Static Constants
-private const val ANIM_DURATION: Long = 250L
-private const val MAX_ALPHA: Float = 1f
-private const val MIN_ALPHA: Float = 0f
-private const val PRELOAD_IMAGE_LIMIT: Int = 3
-// endregion
 
 class Showroom
 constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
-    // region Properties
+    // region View Properties
     private lateinit var parentActivity: AppCompatActivity
-    private val viewParent by lazy { findViewById<ConstraintLayout>(R.id.parent_view) }
+    private val parentView by lazy { findViewById<ConstraintLayout>(R.id.parent_view) }
     private val imageViewPager by lazy { findViewById<ViewPager2>(R.id.image_recycler) }
     private val thumbnailRecycler by lazy { findViewById<RecyclerView>(R.id.thumbnail_recycler) }
     private val thumbnailRecyclerContainer by lazy { findViewById<ConstraintLayout>(R.id.thumbnail_recycler_container) }
     private val toolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
-    private val description by lazy { findViewById<TextView>(R.id.description) }
-    private val counter by lazy { findViewById<TextView>(R.id.image_counter) }
+    private val descriptionText by lazy { findViewById<TextView>(R.id.description) }
+    private val countText by lazy { findViewById<TextView>(R.id.image_counter) }
     // endregion
 
     // region Data Properties
@@ -68,8 +66,9 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region Custom Attributes
-    private var fontPrimary: Typeface? = null
-    private var fontSecondary: Typeface? = null
+    private var fontPrimary: Typeface? = Typeface.DEFAULT
+    private var fontSecondary: Typeface? = Typeface.DEFAULT
+    private var imagePreloadLimit: Int = 3
     // endregion
 
     // region IO Event Properties
@@ -78,7 +77,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     // region Initialisation
     init {
-        LayoutInflater.from(context).inflate(R.layout.layout_gallery_image_showroom, this)
+        LayoutInflater.from(context).inflate(R.layout.layout_showroom, this)
 
         context.theme.obtainStyledAttributes(
             attrs,
@@ -107,8 +106,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun setupCustomAttributes(typedArray: TypedArray) {
         try {
             val fontPrimaryRes = typedArray.getResourceId(R.styleable.Showroom_fontFamilyPrimary, 0)
-            val fontSecondaryRes =
-                typedArray.getResourceId(R.styleable.Showroom_fontFamilySecondary, 0)
+            val fontSecondaryRes = typedArray.getResourceId(R.styleable.Showroom_fontFamilySecondary, 0)
+            val preloadLimit = typedArray.getInteger(R.styleable.Showroom_imagePreloadLimit, 3)
 
             if (fontPrimaryRes != 0) {
                 fontPrimary = ResourcesCompat.getFont(context, fontPrimaryRes)
@@ -118,8 +117,9 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
                 fontSecondary = ResourcesCompat.getFont(context, fontSecondaryRes)
             }
 
-            description.typeface = fontPrimary
-            counter.typeface = fontSecondary
+            descriptionText.typeface = fontPrimary
+            countText.typeface = fontSecondary
+            imagePreloadLimit = preloadLimit
         } finally { typedArray.recycle() }
     }
 
@@ -147,7 +147,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     }
 
     private fun setupEdgeToEdge() {
-        viewParent.systemUiVisibility =
+        parentView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         parentActivity.window.apply {
             navigationBarColor = Color.TRANSPARENT
@@ -169,7 +169,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         imagePagerAdapter = ImagePagerAdapter(galleryData)
         imageViewPager.apply {
             adapter = imagePagerAdapter
-            offscreenPageLimit = PRELOAD_IMAGE_LIMIT.toInt()
+            offscreenPageLimit = imagePreloadLimit
         }
 
         imagePagerAdapter.onImageClicked = {
@@ -181,31 +181,13 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             override fun onPageSelected(position: Int) {
                 thumbnailRecycler.smoothScrollToPosition(position)
                 setThumbnailAsSelected(position)
-
-                CoroutineScope(Dispatchers.IO).launch { preloadUpcomingImages(position) }
+                preload(position)
             }
         })
     }
 
-    private suspend fun preloadUpcomingImages(position: Int) = withContext(Dispatchers.IO) {
-        when (position) {
-            0 -> {
-                for (i in 0..PRELOAD_IMAGE_LIMIT) {
-                    val currentItem: Int = position + i
-                    if (currentItem <= galleryData.lastIndex) {
-                        Coil.load(context, galleryData[currentItem].image)
-                        Coil.load(context, galleryData[currentItem].downscaledImage)
-                    }
-                }
-            }
-            else -> {
-                val nextItem: Int = position + 1
-                if (nextItem <= galleryData.lastIndex) {
-                    Coil.load(context, galleryData[nextItem].image)
-                    Coil.load(context, galleryData[nextItem].downscaledImage)
-                }
-            }
-        }
+    private fun preload(position: Int) = CoroutineScope(Dispatchers.IO).launch {
+        preloadUpcomingImages(context, position, galleryData, imagePreloadLimit)
     }
 
     private fun setupThumbnailRecycler() {
@@ -214,7 +196,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             setHasFixedSize(true)
             adapter = thumbnailRecyclerAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            setItemViewCacheSize(PRELOAD_IMAGE_LIMIT)
+            setItemViewCacheSize(imagePreloadLimit)
         }
         thumbnailRecyclerAdapter.onThumbnailClicked = { position ->
             imageViewPager.setCurrentItem(position, false)
@@ -250,29 +232,26 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun setSystemUi(hide: Boolean) {
         ShowRoomActivityUtils.setSystemUiForActivity(parentActivity, hide)
 
-        ViewCompat
-            .animate(toolbar)
-            .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
-            .setDuration(ANIM_DURATION)
-            .start()
+        fun fade(view: View) {
+            ViewCompat
+                .animate(view)
+                .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
+                .setDuration(ANIM_DURATION)
+                .start()
+        }
 
-        ViewCompat
-            .animate(description)
-            .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
-            .setDuration(ANIM_DURATION)
-            .start()
+        fun translateY(view: View) {
+            ViewCompat
+                .animate(view)
+                .translationY(if (hide) view.height.toFloat() else 0f)
+                .setDuration(ANIM_DURATION)
+                .start()
+        }
 
-        ViewCompat
-            .animate(counter)
-            .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
-            .setDuration(ANIM_DURATION)
-            .start()
-
-        ViewCompat
-            .animate(thumbnailRecyclerContainer)
-            .translationY(if (hide) thumbnailRecyclerContainer.height.toFloat() else 0f)
-            .setDuration(ANIM_DURATION)
-            .start()
+        fade(toolbar)
+        fade(descriptionText)
+        fade(countText)
+        translateY(thumbnailRecyclerContainer)
     }
     // endregion
 
@@ -282,8 +261,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
         if (currentPosition != position) {
             if (position <= galleryData.size && position >= 0) {
-                updateCounter(position)
-                updateDescription(position)
+                countText.setCount(position, galleryData.size)
+                descriptionText.setDescription(galleryData[position].description)
 
                 galleryData.find { it.selected }?.selected = false
                 galleryData[position].selected = true
@@ -291,22 +270,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
                 thumbnailRecyclerAdapter.notifyDataSetChanged()
             }
         }
-    }
-    // endregion
-
-    // region Counter Updates
-    @SuppressWarnings("SetTextI18n")
-    private fun updateCounter(position: Int) {
-        counter.text = "(${position + 1}/${galleryData.size})"
-    }
-    // endregion
-
-    // region Description Updates
-    private fun updateDescription(position: Int) {
-        val text = galleryData[position].description
-
-        description.visibility = if (text.isNullOrBlank()) View.INVISIBLE else View.VISIBLE
-        description.text = text
     }
     // endregion
 
