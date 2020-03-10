@@ -22,13 +22,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import coil.Coil
 import coil.ImageLoader
-import coil.api.load
 import coil.util.CoilUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import no.mhl.showroom.Constants
 import no.mhl.showroom.Constants.ANIM_DURATION
 import no.mhl.showroom.Constants.MAX_ALPHA
 import no.mhl.showroom.Constants.MIN_ALPHA

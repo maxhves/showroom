@@ -30,7 +30,6 @@ class ShowroomLite(
 ) : FrameLayout(context, attrs) {
 
     // region View Properties
-    private val parentView by lazy { findViewById<ConstraintLayout>(R.id.parent) }
     private val viewPager by lazy { findViewById<ViewPager2>(R.id.view_pager) }
     private val descriptionText by lazy { findViewById<TextView>(R.id.description) }
     private val countText by lazy { findViewById<TextView>(R.id.image_counter) }
@@ -40,6 +39,12 @@ class ShowroomLite(
     private lateinit var galleryData: List<GalleryData>
     private lateinit var imagePagerAdapter: ImagePagerAdapter
     private var initialPosition: Int = 0
+    val currentPosition: Int
+        get() = viewPager.currentItem
+    // endregion
+
+    // region Click Exposure Properties
+    var onImageClicked: (() -> Unit)? = null
     // endregion
 
     // region Custom Attribute Properties
@@ -103,7 +108,7 @@ class ShowroomLite(
     }
 
     private fun setupViews() {
-
+        setupViewPager()
     }
 
     private fun setupViewPager() {
@@ -113,7 +118,7 @@ class ShowroomLite(
             offscreenPageLimit = imagePreloadLimit
         }
 
-        imagePagerAdapter.onImageClicked = { }
+        onImageClicked = imagePagerAdapter.onImageClicked
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
