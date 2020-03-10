@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:title="@string/ad_detail_title"
+        app:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Showroom Lite -->
+    <no.mhl.showroom.ui.ShowroomLite
+        android:id="@+id/showroom_lite"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ad_detail_gallery_height"
+        android:background="@color/liteGalleryBackground"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ad_detail_subtitle"
+        android:textSize="@dimen/text_regular"
+        android:paddingStart="@dimen/regular"
+        android:paddingEnd="@dimen/regular"
+        android:paddingTop="@dimen/regular"
+        android:paddingBottom="@dimen/small"
+        android:textColor="@android:color/black"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintTop_toBottomOf="@id/showroom_lite"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ad_detail_description"
+        android:textSize="@dimen/text_regular"
+        android:paddingStart="@dimen/regular"
+        android:paddingEnd="@dimen/regular"
+        android:paddingTop="@dimen/small"
+        android:paddingBottom="@dimen/regular"
+        android:textColor="@android:color/black"
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

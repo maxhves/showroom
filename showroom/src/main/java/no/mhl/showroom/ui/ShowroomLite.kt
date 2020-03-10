@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import no.mhl.showroom.R
 import no.mhl.showroom.data.model.GalleryData
 import no.mhl.showroom.data.preloadUpcomingImages
+import no.mhl.showroom.ui.adapter.ImageLitePagerAdapter
 import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.util.setCount
 import no.mhl.showroom.util.setDescription
@@ -37,7 +38,7 @@ class ShowroomLite(
 
     // region Properties
     private lateinit var galleryData: List<GalleryData>
-    private lateinit var imagePagerAdapter: ImagePagerAdapter
+    private lateinit var imagePagerAdapter: ImageLitePagerAdapter
     private var initialPosition: Int = 0
     val currentPosition: Int
         get() = viewPager.currentItem
@@ -112,21 +113,27 @@ class ShowroomLite(
     }
 
     private fun setupViewPager() {
-        imagePagerAdapter = ImagePagerAdapter(galleryData)
+        imagePagerAdapter = ImageLitePagerAdapter(galleryData)
         viewPager.apply {
             adapter = imagePagerAdapter
             offscreenPageLimit = imagePreloadLimit
         }
 
-        onImageClicked = imagePagerAdapter.onImageClicked
+        imagePagerAdapter.onImageClicked = { onImageClicked?.invoke() }
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                countText.setCount(position, galleryData.size)
-                descriptionText.setDescription(galleryData[position].description)
+                setupItemDetails(position)
                 preload(position)
             }
         })
+
+        setupItemDetails(0)
+    }
+
+    private fun setupItemDetails(position: Int) {
+        countText.setCount(position, galleryData.size)
+        descriptionText.setDescription(galleryData[position].description)
     }
     // endregion
 

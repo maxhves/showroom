@@ -15,7 +15,6 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
 
     // region Properties
     var onImageClicked: (() -> Unit)? = null
-    private var lastPosition: Int = 0
     // endregion
 
     // region View Holder
@@ -44,8 +43,6 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
         }
 
         holder.imageView.setOnClickListener { onImageClicked?.invoke() }
-
-        lastPosition = position
     }
     // endregion
 

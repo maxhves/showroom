@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- region General -->
+    <dimen name="small">8dp</dimen>
+    <dimen name="regular">16dp</dimen>
+    <!-- endregion -->
+
+    <!-- region Text -->
+    <dimen name="text_regular">16sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+    <!-- endregion -->
+
+    <!-- region Ad Detail -->
+    <dimen name="ad_detail_gallery_height">260dp</dimen>
+    <!-- endregion -->
+
+</resources>

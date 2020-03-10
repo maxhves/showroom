@@ -1,3 +1,17 @@
 <resources>
+
+    <!-- region App Name -->
     <string name="app_name">Showroom</string>
+    <!-- endregion -->
+
+    <!-- region Ad Detail -->
+    <string name="ad_detail_title">Showroom Sample</string>
+    <string name="ad_detail_subtitle">
+        A lovely and very central home, located in the heart of Oslo, a must see!
+    </string>
+    <string name="ad_detail_description">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </string>
+    <!-- endregion -->
+
 </resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    android:id="@+id/nav_graph"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/adDetailFragment">
+
+    <fragment
+        android:id="@+id/adDetailFragment"
+        android:name="no.mhl.showroom.ui.detail.AdDetailFragment"
+        android:label="AdDetailFragment" >
+        <action
+            android:id="@+id/action_adDetailFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="no.mhl.showroom.ui.gallery.GalleryFragment"
+        android:label="GalleryFragment" />
+
+</navigation>
