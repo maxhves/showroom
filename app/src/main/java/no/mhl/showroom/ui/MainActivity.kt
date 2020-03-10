@@ -1,9 +1,8 @@
-package no.mhl.showroom
+package no.mhl.showroom.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import no.mhl.showroom.data.model.GalleryData
-import no.mhl.showroom.ui.Showroom
+import no.mhl.showroom.R
 
 class MainActivity : AppCompatActivity() {
 
