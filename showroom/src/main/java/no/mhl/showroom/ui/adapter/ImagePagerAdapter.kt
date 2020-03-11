@@ -1,48 +1,30 @@
 package no.mhl.showroom.ui.adapter
 
-import android.annotation.SuppressLint
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
-import com.alexvasilkov.gestures.views.GestureImageView
 import no.mhl.showroom.R
 import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.ui.adapter.viewholder.ImagePagerViewHolder
 
 class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
-    RecyclerView.Adapter<ImagePagerAdapter.ImagePageViewHolder>() {
+    RecyclerView.Adapter<ImagePagerViewHolder>() {
 
     // region Properties
     var onImageClicked: (() -> Unit)? = null
     // endregion
 
-    // region View Holder
-    class ImagePageViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: GestureImageView by lazy { view.findViewById<GestureImageView>(R.id.row_image_gallery_image) }
-    }
-    // endregion
-
     // region Initialisation
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImagePageViewHolder {
-        return ImagePageViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ImagePagerViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.row_image_pager,
                 parent,
                 false
             )
         )
-    }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onBindViewHolder(holder: ImagePageViewHolder, position: Int) {
-        val item = galleryData[position]
-
-        holder.imageView.load(item.image) {
-            error(R.drawable.ic_error)
-        }
-
-        holder.imageView.setOnClickListener { onImageClicked?.invoke() }
+    override fun onBindViewHolder(holder: ImagePagerViewHolder, position: Int) {
+        holder.bind(galleryData[position], onImageClicked)
     }
     // endregion
 
@@ -51,10 +33,5 @@ class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
 
     override fun getItemViewType(position: Int) = position
     // endregion
-
-    override fun onViewDetachedFromWindow(holder: ImagePageViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        holder.itemView.clearAnimation()
-    }
 
 }

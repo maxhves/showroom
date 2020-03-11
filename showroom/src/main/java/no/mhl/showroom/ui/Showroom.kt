@@ -34,10 +34,7 @@ import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
 import no.mhl.showroom.R
 import no.mhl.showroom.data.preloadUpcomingImages
-import no.mhl.showroom.util.ShowRoomActivityUtils
-import no.mhl.showroom.util.indexOrigin
-import no.mhl.showroom.util.setCount
-import no.mhl.showroom.util.setDescription
+import no.mhl.showroom.util.*
 import okhttp3.OkHttpClient
 
 class Showroom
@@ -130,6 +127,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun setupViews() {
         setupLayoutDisplayCutoutMode()
         setupEdgeToEdge()
+        setupSystemUiListener()
         setupImageViewPager()
         setupThumbnailRecycler()
         setupToolbar()
@@ -144,8 +142,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     }
 
     private fun setupEdgeToEdge() {
-        parentView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        parentView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         parentActivity.window.apply {
             navigationBarColor = Color.TRANSPARENT
             statusBarColor = Color.TRANSPARENT
@@ -162,6 +159,10 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
     }
 
+    private fun setupSystemUiListener() {
+        setOnSystemUiVisibilityChangeListener { toggleGalleryUi(isFullscreen) }
+    }
+
     private fun setupImageViewPager() {
         imagePagerAdapter = ImagePagerAdapter(galleryData)
         imageViewPager.apply {
@@ -170,7 +171,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         imagePagerAdapter.onImageClicked = {
-            setSystemUi(isFullscreen.not())
+            setSystemUiForActivity(parentActivity, isFullscreen.not())
             isFullscreen = isFullscreen.not()
         }
 
@@ -226,14 +227,14 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region Show/Hide System UI
-    private fun setSystemUi(hide: Boolean) {
-        ShowRoomActivityUtils.setSystemUiForActivity(parentActivity, hide)
-
+    private fun toggleGalleryUi(hide: Boolean) {
         fun fade(view: View) {
             ViewCompat
                 .animate(view)
                 .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
                 .setDuration(ANIM_DURATION)
+                .withStartAction { if (hide.not()) { view.visibility = View.VISIBLE } }
+                .withEndAction { if (hide) { view.visibility = View.GONE } }
                 .start()
         }
 
