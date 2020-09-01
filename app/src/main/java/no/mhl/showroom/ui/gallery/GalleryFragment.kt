@@ -40,7 +40,7 @@ class GalleryFragment : Fragment() {
 
     private fun setupShowroom() {
         showroom.attach((activity as AppCompatActivity), provideGalleryData())
-        showroom.setBackPressedEvent { findNavController().popBackStack() }
+        showroom.setBackPressedEvent { findNavController().popBackStack()  }
     }
     // endregion
 

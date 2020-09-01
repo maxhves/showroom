@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.Typeface
-import android.os.Build
 import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +14,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -125,42 +125,30 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     }
 
     private fun setupViews() {
-        setupLayoutDisplayCutoutMode()
         setupEdgeToEdge()
-        setupSystemUiListener()
         setupImageViewPager()
         setupThumbnailRecycler()
         setupToolbar()
         setInitialPositionIfApplicable()
     }
 
-    private fun setupLayoutDisplayCutoutMode() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            parentActivity.window.attributes.layoutInDisplayCutoutMode =
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-        }
-    }
-
     private fun setupEdgeToEdge() {
-        parentView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        WindowCompat.setDecorFitsSystemWindows(parentActivity.window, false)
+
         parentActivity.window.apply {
             navigationBarColor = Color.TRANSPARENT
             statusBarColor = Color.TRANSPARENT
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
-            v.updatePadding(top = insets.systemWindowInsetTop)
+            v.updatePadding(top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top)
             insets
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(thumbnailRecyclerContainer) { v, insets ->
-            v.updatePadding(bottom = insets.systemWindowInsetBottom)
+            v.updatePadding(bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom)
             insets
         }
-    }
-
-    private fun setupSystemUiListener() {
-        setOnSystemUiVisibilityChangeListener { toggleGalleryUi(isFullscreen) }
     }
 
     private fun setupImageViewPager() {
@@ -171,8 +159,9 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         imagePagerAdapter.onImageClicked = {
-            setSystemUiForActivity(parentActivity, isFullscreen.not())
+            setSystemUiVisibility()
             isFullscreen = isFullscreen.not()
+            toggleGalleryUi(isFullscreen)
         }
 
         imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -221,6 +210,16 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         toolbar.setNavigationOnClickListener {
+            val controller = parentView.windowInsetsController
+            controller?.setSystemBarsAppearance(0, APPEARANCE_LIGHT_STATUS_BARS)
+
+            WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
+
+            parentActivity.window.apply {
+                navigationBarColor = Color.BLUE
+                statusBarColor = Color.BLUE
+            }
+
             onBackNavigationPressed?.invoke(galleryData.indexOf(galleryData.first { it.selected }))
         }
     }
@@ -250,6 +249,17 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         fade(descriptionText)
         fade(countText)
         translateY(thumbnailRecyclerContainer)
+    }
+
+    private fun setSystemUiVisibility() {
+        val controller = parentView.windowInsetsController?.apply {
+            systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE
+        }
+
+        when (isFullscreen.not()) {
+            true -> controller?.hide(WindowInsetsCompat.Type.systemBars())
+            false -> controller?.show(WindowInsetsCompat.Type.systemBars())
+        }
     }
     // endregion
 
