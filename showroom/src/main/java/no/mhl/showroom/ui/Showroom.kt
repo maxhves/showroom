@@ -62,7 +62,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private var originalNavigationBarColor: Int = 0
     private var initialPosition: Int = 0
     private var isImmersive: Boolean = false
-
     private val hiddenFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
             View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
             View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
