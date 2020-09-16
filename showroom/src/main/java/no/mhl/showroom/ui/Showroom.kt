@@ -5,8 +5,8 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.Typeface
 import android.util.AttributeSet
-import android.view.*
-import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -29,13 +29,16 @@ import kotlinx.coroutines.launch
 import no.mhl.showroom.Constants.ANIM_DURATION
 import no.mhl.showroom.Constants.MAX_ALPHA
 import no.mhl.showroom.Constants.MIN_ALPHA
+import no.mhl.showroom.R
 import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.data.preloadUpcomingImages
 import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
-import no.mhl.showroom.R
-import no.mhl.showroom.data.preloadUpcomingImages
-import no.mhl.showroom.util.*
+import no.mhl.showroom.util.indexOrigin
+import no.mhl.showroom.util.setCount
+import no.mhl.showroom.util.setDescription
 import okhttp3.OkHttpClient
+
 
 class Showroom
 constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
@@ -46,7 +49,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private val imageViewPager by lazy { findViewById<ViewPager2>(R.id.image_recycler) }
     private val thumbnailRecycler by lazy { findViewById<RecyclerView>(R.id.thumbnail_recycler) }
     private val thumbnailRecyclerContainer by lazy { findViewById<ConstraintLayout>(R.id.thumbnail_recycler_container) }
-    private val toolbar: Toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
+    private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
     private val descriptionText by lazy { findViewById<TextView>(R.id.description) }
     private val countText by lazy { findViewById<TextView>(R.id.image_counter) }
     // endregion
@@ -56,7 +59,18 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private lateinit var imagePagerAdapter: ImagePagerAdapter
     private lateinit var thumbnailRecyclerAdapter: ThumbnailRecyclerAdapter
     private var initialPosition: Int = 0
-    private var isFullscreen: Boolean = false
+    private var isImmersive: Boolean = false
+
+    private val hiddenFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+            View.SYSTEM_UI_FLAG_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_IMMERSIVE
+
+    private val visibleFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
     // endregion
 
     // region Custom Attributes
@@ -100,7 +114,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun setupCustomAttributes(typedArray: TypedArray) {
         try {
             val fontPrimaryRes = typedArray.getResourceId(R.styleable.Showroom_fontFamilyPrimary, 0)
-            val fontSecondaryRes = typedArray.getResourceId(R.styleable.Showroom_fontFamilySecondary, 0)
+            val fontSecondaryRes =
+                typedArray.getResourceId(R.styleable.Showroom_fontFamilySecondary, 0)
             val preloadLimit = typedArray.getInteger(R.styleable.Showroom_imagePreloadLimit, 3)
 
             if (fontPrimaryRes != 0) {
@@ -114,7 +129,9 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             descriptionText.typeface = fontPrimary
             countText.typeface = fontSecondary
             imagePreloadLimit = preloadLimit
-        } finally { typedArray.recycle() }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     fun attach(activity: AppCompatActivity, data: List<GalleryData>, openAtIndex: Int = 0) {
@@ -159,9 +176,9 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         imagePagerAdapter.onImageClicked = {
-            setSystemUiVisibility()
-            isFullscreen = isFullscreen.not()
-            toggleGalleryUi(isFullscreen)
+            toggleImmersion()
+            isImmersive = isImmersive.not()
+            toggleGalleryUi(isImmersive)
         }
 
         imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -210,14 +227,11 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         toolbar.setNavigationOnClickListener {
-            val controller = parentView.windowInsetsController
-            controller?.setSystemBarsAppearance(0, APPEARANCE_LIGHT_STATUS_BARS)
-
             WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
 
             parentActivity.window.apply {
-                navigationBarColor = Color.BLUE
-                statusBarColor = Color.BLUE
+                navigationBarColor = Color.BLACK
+                statusBarColor = Color.parseColor("#3700B3")
             }
 
             onBackNavigationPressed?.invoke(galleryData.indexOf(galleryData.first { it.selected }))
@@ -232,8 +246,16 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
                 .animate(view)
                 .alpha(if (hide) MIN_ALPHA else MAX_ALPHA)
                 .setDuration(ANIM_DURATION)
-                .withStartAction { if (hide.not()) { view.visibility = View.VISIBLE } }
-                .withEndAction { if (hide) { view.visibility = View.GONE } }
+                .withStartAction {
+                    if (hide.not()) {
+                        view.visibility = View.VISIBLE
+                    }
+                }
+                .withEndAction {
+                    if (hide) {
+                        view.visibility = View.GONE
+                    }
+                }
                 .start()
         }
 
@@ -251,14 +273,12 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         translateY(thumbnailRecyclerContainer)
     }
 
-    private fun setSystemUiVisibility() {
-        val controller = parentView.windowInsetsController?.apply {
-            systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_BARS_BY_SWIPE
-        }
-
-        when (isFullscreen.not()) {
-            true -> controller?.hide(WindowInsetsCompat.Type.systemBars())
-            false -> controller?.show(WindowInsetsCompat.Type.systemBars())
+    private fun toggleImmersion() {
+        parentActivity.window.decorView.apply {
+            setSystemUiVisibility(when (isImmersive) {
+                true -> visibleFlags
+                else -> hiddenFlags
+            })
         }
     }
     // endregion
