@@ -58,6 +58,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private lateinit var galleryData: List<GalleryData>
     private lateinit var imagePagerAdapter: ImagePagerAdapter
     private lateinit var thumbnailRecyclerAdapter: ThumbnailRecyclerAdapter
+    private var originalStatusBarColor: Int = 0
+    private var originalNavigationBarColor: Int = 0
     private var initialPosition: Int = 0
     private var isImmersive: Boolean = false
 
@@ -138,6 +140,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         parentActivity = activity
         galleryData = data
         initialPosition = openAtIndex.indexOrigin
+        originalStatusBarColor = activity.window.statusBarColor
+        originalNavigationBarColor = activity.window.navigationBarColor
         setupViews()
     }
 
@@ -230,8 +234,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
 
             parentActivity.window.apply {
-                navigationBarColor = Color.BLACK
-                statusBarColor = Color.parseColor("#3700B3")
+                navigationBarColor = originalNavigationBarColor
+                statusBarColor = originalStatusBarColor
             }
 
             onBackNavigationPressed?.invoke(galleryData.indexOf(galleryData.first { it.selected }))
