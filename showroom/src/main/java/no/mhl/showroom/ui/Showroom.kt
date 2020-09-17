@@ -153,7 +153,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     }
 
     private fun setupEdgeToEdge() {
-        WindowCompat.setDecorFitsSystemWindows(parentActivity.window, false)
+        parentView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
         parentActivity.window.apply {
             navigationBarColor = Color.TRANSPARENT
@@ -161,12 +161,12 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
-            v.updatePadding(top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top)
+            v.updatePadding(top = insets.systemWindowInsetTop)
             insets
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(thumbnailRecyclerContainer) { v, insets ->
-            v.updatePadding(bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom)
+            v.updatePadding(bottom = insets.systemWindowInsetBottom)
             insets
         }
     }
@@ -230,7 +230,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         toolbar.setNavigationOnClickListener {
-            WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
+            parentView.systemUiVisibility = 0
+            parentActivity.window.decorView.systemUiVisibility = 0
 
             parentActivity.window.apply {
                 navigationBarColor = originalNavigationBarColor

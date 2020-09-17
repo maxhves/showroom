@@ -4,11 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Android-showroom-Showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/Android-showroom-Showroom.iml" group="Showroom" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Showroom.iml" filepath="$PROJECT_DIR$/.idea/Showroom.iml" group="Showroom" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Showroom-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Showroom-app.iml" group="Showroom/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Showroom/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/com.github.MaxHvesser-showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/com.github.MaxHvesser-showroom.iml" group="Showroom/showroom" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/showroom.iml" group="Showroom/showroom" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom-Showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom-Showroom.iml" group="Showroom" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/showroom-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/showroom-app.iml" group="Showroom/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/showroom-showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/showroom-showroom.iml" group="Showroom/showroom" />
     </modules>
   </component>
