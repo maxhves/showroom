@@ -1,7 +1,11 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.github.dcendents.android-maven'
+import no.mhl.showroom.Libs
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'com.github.dcendents.android-maven'
+}
 
 group='com.github.MaxHvesser'
 
@@ -38,31 +42,27 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:$ktx_core_version"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-
+    // Testing
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    // Recycler View
-    implementation "androidx.recyclerview:recyclerview:$recycler_version"
+    // Kotlin
+    implementation Libs.Kotlin.stdLib
+    implementation Libs.Kotlin.ktx
 
-    // View Pager 2
-    implementation "androidx.viewpager2:viewpager2:$viewpager_version"
-
-    // Constraint Layout
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
+    // AndroidX
+    implementation Libs.AndroidX.appCompat
+    implementation Libs.AndroidX.recycler
+    implementation Libs.AndroidX.viewPager
+    implementation Libs.AndroidX.constraint
+    implementation Libs.AndroidX.Navigation.fragment
+    implementation Libs.AndroidX.Navigation.ui
 
     // Coil
-    implementation "io.coil-kt:coil:$coil_version"
+    implementation Libs.coil
 
     // Gesture views
-    implementation "com.alexvasilkov:gesture-views:$gestureviews_version"
-
-    // Navigation Component
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation Libs.gestureViews
 
 }
