@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Android-showroom-Showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/Android-showroom-Showroom.iml" group="Showroom" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Showroom.iml" filepath="$PROJECT_DIR$/.idea/Showroom.iml" group="Showroom" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Showroom/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/com.github.MaxHvesser-showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/com.github.MaxHvesser-showroom.iml" group="Showroom/showroom" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/showroom.iml" group="Showroom/showroom" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom-Showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom-Showroom.iml" group="Showroom" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/showroom-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/showroom-app.iml" group="Showroom/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/showroom-showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/showroom-showroom.iml" group="Showroom/showroom" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/Showroom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Showroom.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Showroom.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Showroom.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/Showroom.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/showroom/Showroom.showroom.iml" filepath="$PROJECT_DIR$/.idea/modules/showroom/Showroom.showroom.iml" />
     </modules>
   </component>
 </project>
