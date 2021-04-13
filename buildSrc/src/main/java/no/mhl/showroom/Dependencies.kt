@@ -10,7 +10,7 @@ object Libs {
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
 
-        const val ktx = "androidx.core:core-ktx:1.3.2"
+        const val ktx = "androidx.core:core-ktx:1.5.0-rc01"
     }
 
     object AndroidX {

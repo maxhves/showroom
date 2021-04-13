@@ -4,19 +4,16 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build
 import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
+import androidx.core.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -62,16 +59,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private var originalNavigationBarColor: Int = 0
     private var initialPosition: Int = 0
     private var isImmersive: Boolean = false
-    private val hiddenFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-            View.SYSTEM_UI_FLAG_FULLSCREEN or
-            View.SYSTEM_UI_FLAG_IMMERSIVE
-
-    private val visibleFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
     // endregion
 
     // region Custom Attributes
@@ -153,22 +140,38 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     }
 
     private fun setupEdgeToEdge() {
-        parentView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 
-        parentActivity.window.apply {
-            navigationBarColor = Color.TRANSPARENT
-            statusBarColor = Color.TRANSPARENT
+        if (Build.VERSION.SDK_INT >= 28) {
+
+            // Set up display cutout mode
+            parentActivity.window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+
+            // Set system bars as translucent
+            parentActivity.window.apply {
+                navigationBarColor = Color.TRANSPARENT
+                statusBarColor = Color.TRANSPARENT
+            }
+
+            // Declare we are drawing under system bars
+            WindowCompat.setDecorFitsSystemWindows(parentActivity.window, false)
+
+            // Listen for insets and adjust as necessary
+            ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
+                val systemInsets = insets.getInsets(WindowInsets.Type.displayCutout())
+                v.updatePadding(top = systemInsets.top)
+                insets
+            }
+
+        } else {
+
+            // On older SDK versions we simply set the system bars to black
+            parentActivity.window.apply {
+                navigationBarColor = Color.BLACK
+                statusBarColor = Color.BLACK
+            }
+
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
-            v.updatePadding(top = insets.systemWindowInsetTop)
-            insets
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(thumbnailRecyclerContainer) { v, insets ->
-            v.updatePadding(bottom = insets.systemWindowInsetBottom)
-            insets
-        }
     }
 
     private fun setupImageViewPager() {
@@ -230,14 +233,11 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         toolbar.setNavigationOnClickListener {
-            parentView.systemUiVisibility = 0
-            parentActivity.window.decorView.systemUiVisibility = 0
-
             parentActivity.window.apply {
                 navigationBarColor = originalNavigationBarColor
                 statusBarColor = originalStatusBarColor
             }
-
+            WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
             onBackNavigationPressed?.invoke(galleryData.indexOf(galleryData.first { it.selected }))
         }
     }
@@ -278,13 +278,28 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     }
 
     private fun toggleImmersion() {
-        parentActivity.window.decorView.apply {
-            setSystemUiVisibility(when (isImmersive) {
-                true -> visibleFlags
-                else -> hiddenFlags
-            })
+        // Only toggle system bars on SDK 28 and over to avoid graphical issues
+        if (Build.VERSION.SDK_INT < 28) return
+
+        // Get the window insets controller
+        val insetsController = WindowInsetsControllerCompat(parentActivity.window, parentActivity.window.decorView)
+
+        // Set behavior of the immersive mode
+        val behavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        // Set type of system bars to hide and show
+        val type = WindowInsetsCompat.Type.systemBars()
+        insetsController.systemBarsBehavior = behavior
+
+        // Toggle immersion
+        if (isImmersive) {
+            insetsController.show(type)
+        } else {
+            insetsController.hide(type)
         }
+
     }
+
     // endregion
 
     // region Thumbnail Selection
