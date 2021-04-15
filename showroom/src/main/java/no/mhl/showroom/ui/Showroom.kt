@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import no.mhl.showroom.Constants.ANIM_DURATION
 import no.mhl.showroom.Constants.MAX_ALPHA
 import no.mhl.showroom.Constants.MIN_ALPHA
+import no.mhl.showroom.Constants.TRANSPARENT
 import no.mhl.showroom.R
 import no.mhl.showroom.data.model.GalleryData
 import no.mhl.showroom.data.preloadUpcomingImages
@@ -144,15 +145,21 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun setupEdgeToEdge() {
 
         if (Build.VERSION.SDK_INT >= 28) {
-            
-            // Set system bars as translucent
-            parentActivity.window.apply {
-                navigationBarColor = Color.TRANSPARENT
-                statusBarColor = Color.TRANSPARENT
-            }
 
             // Declare we are drawing under system bars
             WindowCompat.setDecorFitsSystemWindows(parentActivity.window, false)
+            
+            // Set system bars as translucent
+            parentActivity.window.apply {
+                navigationBarColor = Color.parseColor(TRANSPARENT)
+                statusBarColor = Color.parseColor(TRANSPARENT)
+            }
+
+            // Attempt to enusure system bar icons are white
+            WindowInsetsControllerCompat(parentActivity.window, parentActivity.window.decorView).apply {
+                isAppearanceLightNavigationBars = false
+                isAppearanceLightStatusBars = false
+            }
 
             // Listen for insets and adjust as necessary
             ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
