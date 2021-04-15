@@ -59,6 +59,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private var originalNavigationBarColor: Int = 0
     private var initialPosition: Int = 0
     private var isImmersive: Boolean = false
+    private var topPaddingUpdated: Boolean = false
+    private var bottomPaddingUpdated: Boolean = false
     // endregion
 
     // region Custom Attributes
@@ -144,7 +146,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         if (Build.VERSION.SDK_INT >= 28) {
 
             // Set up display cutout mode
-            parentActivity.window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            //parentActivity.window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 
             // Set system bars as translucent
             parentActivity.window.apply {
@@ -157,8 +159,20 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
             // Listen for insets and adjust as necessary
             ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
-                val systemInsets = insets.getInsets(WindowInsets.Type.displayCutout())
-                v.updatePadding(top = systemInsets.top)
+                if (topPaddingUpdated.not()) {
+                    val systemInsets = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+                    v.updatePadding(top = systemInsets.top)
+                    topPaddingUpdated = true
+                }
+                insets
+            }
+
+            ViewCompat.setOnApplyWindowInsetsListener(thumbnailRecyclerContainer) { v, insets ->
+                if (bottomPaddingUpdated.not()) {
+                    val systemInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+                    v.updatePadding(bottom = systemInsets.bottom)
+                    bottomPaddingUpdated = true
+                }
                 insets
             }
 
