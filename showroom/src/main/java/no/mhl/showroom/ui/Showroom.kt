@@ -144,10 +144,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private fun setupEdgeToEdge() {
 
         if (Build.VERSION.SDK_INT >= 28) {
-
-            // Set up display cutout mode
-            //parentActivity.window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-
+            
             // Set system bars as translucent
             parentActivity.window.apply {
                 navigationBarColor = Color.TRANSPARENT
