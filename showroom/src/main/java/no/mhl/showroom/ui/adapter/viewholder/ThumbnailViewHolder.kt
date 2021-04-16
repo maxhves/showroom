@@ -24,6 +24,7 @@ class ThumbnailViewHolder(private val view: View) : RecyclerView.ViewHolder(view
         imageView.load(item.downscaledImage) {
             error(R.drawable.thumbnail_placeholder)
             placeholder(R.drawable.thumbnail_placeholder)
+            crossfade(true)
         }
 
         itemView.setOnClickListener { thumbnailClickedEvent?.invoke(position) }

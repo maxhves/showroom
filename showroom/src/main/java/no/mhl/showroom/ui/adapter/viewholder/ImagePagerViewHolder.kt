@@ -1,11 +1,13 @@
 package no.mhl.showroom.ui.adapter.viewholder
 
 import android.view.View
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.alexvasilkov.gestures.views.GestureImageView
 import no.mhl.showroom.R
 import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.util.dp
 
 class ImagePagerViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -15,7 +17,22 @@ class ImagePagerViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
 
     // region Binding
     fun bind(item: GalleryData, imageClickedEvent: (() -> Unit)?) {
-        imageView.load(item.image) { error(R.drawable.ic_error) }
+        imageView.load(item.image) {
+            error(R.drawable.ic_error)
+            crossfade(true)
+            listener(
+                onError = { _, _ ->
+                    imageView.controller.settings.apply {
+                        isZoomEnabled = false
+                        isDoubleTapEnabled = false
+                    }
+                    imageView.updateLayoutParams {
+                        height = 64.dp
+                        width = 64.dp
+                    }
+                }
+            )
+        }
         imageView.setOnClickListener { imageClickedEvent?.invoke() }
     }
     // endregion
