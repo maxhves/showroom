@@ -58,7 +58,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private var originalStatusBarColor: Int = 0
     private var originalNavigationBarColor: Int = 0
     private var initialPosition: Int = 0
-    private var isImmersive: Boolean = false
+    private var immersed: Boolean = false
     private var topPaddingUpdated: Boolean = false
     private var bottomPaddingUpdated: Boolean = false
     // endregion
@@ -200,8 +200,8 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
         imagePagerAdapter.onImageClicked = {
             toggleImmersion()
-            isImmersive = isImmersive.not()
-            toggleGalleryUi(isImmersive)
+            immersed = immersed.not()
+            toggleGalleryUi(immersed)
         }
 
         imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -292,23 +292,25 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     private fun toggleImmersion() {
         // Only toggle system bars on SDK 28 and over to avoid graphical issues
-        if (Build.VERSION.SDK_INT < 28) return
+        if (Build.VERSION.SDK_INT >= 28) {
 
-        // Get the window insets controller
-        val insetsController = WindowInsetsControllerCompat(parentActivity.window, parentActivity.window.decorView)
+            // Get the window insets controller
+            val insetsController =
+                WindowInsetsControllerCompat(parentActivity.window, parentActivity.window.decorView)
 
-        // Set behavior of the immersive mode
-        val behavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            // Set behavior of the immersive mode
+            val behavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
-        // Set type of system bars to hide and show
-        val type = WindowInsetsCompat.Type.systemBars()
-        insetsController.systemBarsBehavior = behavior
+            // Set type of system bars to hide and show
+            val type = WindowInsetsCompat.Type.systemBars()
+            insetsController.systemBarsBehavior = behavior
 
-        // Toggle immersion
-        if (isImmersive) {
-            insetsController.show(type)
-        } else {
-            insetsController.hide(type)
+            // Toggle immersion
+            if (immersed) {
+                insetsController.show(type)
+            } else {
+                insetsController.hide(type)
+            }
         }
 
     }
@@ -339,6 +341,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             navigationBarColor = originalNavigationBarColor
             statusBarColor = originalStatusBarColor
         }
+        if (immersed) { toggleImmersion() }
         WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
     }
     // endregion
