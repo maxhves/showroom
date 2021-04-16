@@ -228,7 +228,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             setItemViewCacheSize(imagePreloadLimit)
         }
         thumbnailRecyclerAdapter.onThumbnailClicked = { position ->
-            //imageViewPager.setCurrentItem(position, false)
+            imageViewPager.currentItemPosition = position
             setThumbnailAsSelected(position)
         }
 

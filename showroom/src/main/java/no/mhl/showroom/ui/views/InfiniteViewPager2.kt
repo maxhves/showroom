@@ -29,7 +29,7 @@ class InfiniteViewPager2(
             else -> viewPager2.currentItem - 1
         }
         set(value) {
-            viewPager2.currentItem = value
+            viewPager2.setCurrentItem(value + 1, false)
         }
     // endregion
 
