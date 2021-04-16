@@ -32,6 +32,7 @@ import no.mhl.showroom.data.model.GalleryData
 import no.mhl.showroom.data.preloadUpcomingImages
 import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
+import no.mhl.showroom.ui.adapter.viewholder.ImagePagerViewHolder
 import no.mhl.showroom.ui.views.InfiniteViewPager2
 import no.mhl.showroom.util.indexOrigin
 import no.mhl.showroom.util.setCount
@@ -200,7 +201,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         imageViewPager.apply {
-            setAdapter(imagePagerAdapter, imagePreloadLimit)
+            setAdapter<ImagePagerViewHolder>(imagePagerAdapter, imagePreloadLimit)
             currentItemPosition = initialPosition
             registerOnPageCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
