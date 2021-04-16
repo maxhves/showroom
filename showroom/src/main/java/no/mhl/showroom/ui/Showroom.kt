@@ -43,7 +43,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     // region View Properties
     private lateinit var parentActivity: AppCompatActivity
-    private val parentView by lazy { findViewById<ConstraintLayout>(R.id.parent_view) }
     private val imageViewPager by lazy { findViewById<ViewPager2>(R.id.image_recycler) }
     private val thumbnailRecycler by lazy { findViewById<RecyclerView>(R.id.thumbnail_recycler) }
     private val thumbnailRecyclerContainer by lazy { findViewById<ConstraintLayout>(R.id.thumbnail_recycler_container) }
@@ -155,7 +154,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
                 statusBarColor = Color.parseColor(TRANSPARENT)
             }
 
-            // Attempt to enusure system bar icons are white
+            // Attempt to ensure system bar icons are white
             WindowInsetsControllerCompat(parentActivity.window, parentActivity.window.decorView).apply {
                 isAppearanceLightNavigationBars = false
                 isAppearanceLightStatusBars = false
