@@ -6,8 +6,12 @@ import no.mhl.showroom.R
 import no.mhl.showroom.data.model.GalleryData
 import no.mhl.showroom.ui.adapter.viewholder.ImagePagerViewHolder
 
-class ImagePagerAdapter(private val galleryData: List<GalleryData>) :
+class ImagePagerAdapter(data: List<GalleryData>) :
     RecyclerView.Adapter<ImagePagerViewHolder>() {
+
+    // region
+    private val galleryData: List<GalleryData> = listOf(data.last()) + data + listOf(data.first())
+    // endregion
 
     // region Properties
     var onImageClicked: (() -> Unit)? = null

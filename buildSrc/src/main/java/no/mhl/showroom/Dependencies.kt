@@ -2,9 +2,11 @@ package no.mhl.showroom
 
 object Libs {
 
+    // General
     const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.3"
     const val mavenGradlePlugin = "com.github.dcendents:android-maven-gradle-plugin:2.1"
 
+    // Kotlin
     object Kotlin {
         const val version = "1.4.31"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
@@ -13,6 +15,7 @@ object Libs {
         const val ktx = "androidx.core:core-ktx:1.5.0-rc01"
     }
 
+    // AndroidX
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.4"
@@ -27,8 +30,8 @@ object Libs {
         }
     }
 
+    // Extras
     const val coil = "io.coil-kt:coil:0.9.5"
-
     const val gestureViews = "com.alexvasilkov:gesture-views:2.6.0"
 
 }

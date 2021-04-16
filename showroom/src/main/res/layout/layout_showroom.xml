@@ -10,7 +10,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Image Recycler View -->
-    <androidx.viewpager2.widget.ViewPager2
+    <no.mhl.showroom.ui.views.InfiniteViewPager2
         android:id="@+id/image_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

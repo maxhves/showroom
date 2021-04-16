@@ -32,6 +32,7 @@ import no.mhl.showroom.data.model.GalleryData
 import no.mhl.showroom.data.preloadUpcomingImages
 import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
+import no.mhl.showroom.ui.views.InfiniteViewPager2
 import no.mhl.showroom.util.indexOrigin
 import no.mhl.showroom.util.setCount
 import no.mhl.showroom.util.setDescription
@@ -43,7 +44,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     // region View Properties
     private lateinit var parentActivity: AppCompatActivity
-    private val imageViewPager by lazy { findViewById<ViewPager2>(R.id.image_recycler) }
+    private val imageViewPager by lazy { findViewById<InfiniteViewPager2>(R.id.image_recycler) }
     private val thumbnailRecycler by lazy { findViewById<RecyclerView>(R.id.thumbnail_recycler) }
     private val thumbnailRecyclerContainer by lazy { findViewById<ConstraintLayout>(R.id.thumbnail_recycler_container) }
     private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
@@ -193,24 +194,25 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     private fun setupImageViewPager() {
         imagePagerAdapter = ImagePagerAdapter(galleryData)
-        imageViewPager.apply {
-            adapter = imagePagerAdapter
-            offscreenPageLimit = imagePreloadLimit
-        }
-
         imagePagerAdapter.onImageClicked = {
             toggleImmersion()
             immersed = immersed.not()
             toggleGalleryUi(immersed)
         }
 
-        imageViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                thumbnailRecycler.smoothScrollToPosition(position)
-                setThumbnailAsSelected(position)
-                preload(position)
-            }
-        })
+        imageViewPager.apply {
+            setAdapter(imagePagerAdapter, imagePreloadLimit)
+            registerOnPageCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    val stablePosition = imageViewPager.currentItemPosition
+
+                    thumbnailRecycler.smoothScrollToPosition(stablePosition)
+                    setThumbnailAsSelected(stablePosition)
+                    preload(stablePosition)
+                }
+            })
+        }
+
     }
 
     private fun preload(position: Int) = CoroutineScope(Dispatchers.IO).launch {
@@ -226,7 +228,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             setItemViewCacheSize(imagePreloadLimit)
         }
         thumbnailRecyclerAdapter.onThumbnailClicked = { position ->
-            imageViewPager.setCurrentItem(position, false)
+            //imageViewPager.setCurrentItem(position, false)
             setThumbnailAsSelected(position)
         }
 
@@ -235,9 +237,9 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
     private fun setInitialPositionIfApplicable() {
         if (initialPosition > 0 && initialPosition < galleryData.size) {
-            imageViewPager.setCurrentItem(initialPosition, false)
-            thumbnailRecycler.scrollToPosition(initialPosition)
-            setThumbnailAsSelected(initialPosition)
+            //imageViewPager.setCurrentItem(initialPosition, false)
+            //thumbnailRecycler.scrollToPosition(initialPosition)
+            //setThumbnailAsSelected(initialPosition)
         }
     }
 
