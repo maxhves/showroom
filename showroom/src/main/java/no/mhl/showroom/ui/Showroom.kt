@@ -128,7 +128,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     fun attach(activity: AppCompatActivity, data: List<GalleryData>, openAtIndex: Int = 0) {
         parentActivity = activity
         galleryData = data
-        initialPosition = openAtIndex.indexOrigin
+        initialPosition = openAtIndex
         originalStatusBarColor = activity.window.statusBarColor
         originalNavigationBarColor = activity.window.navigationBarColor
         setupViews()
@@ -139,7 +139,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         setupImageViewPager()
         setupThumbnailRecycler()
         setupToolbar()
-        setInitialPositionIfApplicable()
     }
 
     private fun setupEdgeToEdge() {
@@ -202,6 +201,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
         imageViewPager.apply {
             setAdapter(imagePagerAdapter, imagePreloadLimit)
+            currentItemPosition = initialPosition
             registerOnPageCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     val stablePosition = imageViewPager.currentItemPosition
@@ -232,15 +232,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             setThumbnailAsSelected(position)
         }
 
-        setThumbnailAsSelected(0)
-    }
-
-    private fun setInitialPositionIfApplicable() {
-        if (initialPosition > 0 && initialPosition < galleryData.size) {
-            //imageViewPager.setCurrentItem(initialPosition, false)
-            //thumbnailRecycler.scrollToPosition(initialPosition)
-            //setThumbnailAsSelected(initialPosition)
-        }
+        setThumbnailAsSelected(initialPosition)
     }
 
     private fun setupToolbar() {
