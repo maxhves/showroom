@@ -18,6 +18,7 @@ class GalleryFragment : Fragment() {
     private lateinit var showroom: Showroom
     // endregion
 
+    // region View Initialisation
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,6 +42,13 @@ class GalleryFragment : Fragment() {
     private fun setupShowroom() {
         showroom.attach((activity as AppCompatActivity), provideGalleryData())
         showroom.setBackPressedEvent { findNavController().popBackStack()  }
+    }
+    // endregion
+
+    // region On Destroy
+    override fun onDestroy() {
+        super.onDestroy()
+        showroom.restoreWindowPreGallery()
     }
     // endregion
 

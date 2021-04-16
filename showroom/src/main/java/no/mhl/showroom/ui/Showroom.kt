@@ -250,11 +250,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         toolbar.setNavigationOnClickListener {
-            parentActivity.window.apply {
-                navigationBarColor = originalNavigationBarColor
-                statusBarColor = originalStatusBarColor
-            }
-            WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
+            restoreWindowPreGallery()
             onBackNavigationPressed?.invoke(galleryData.indexOf(galleryData.first { it.selected }))
         }
     }
@@ -334,6 +330,16 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
                 thumbnailRecyclerAdapter.notifyDataSetChanged()
             }
         }
+    }
+    // endregion
+
+    // region Miscellaneous
+    fun restoreWindowPreGallery() {
+        parentActivity.window.apply {
+            navigationBarColor = originalNavigationBarColor
+            statusBarColor = originalStatusBarColor
+        }
+        WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
     }
     // endregion
 
