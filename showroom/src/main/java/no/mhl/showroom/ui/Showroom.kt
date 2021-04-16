@@ -347,7 +347,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region IO Events
-    fun setBackPressedEvent(backPressedEvent: ((position: Int) -> Unit)) {
+    fun setNavigationExitEvent(backPressedEvent: ((position: Int) -> Unit)) {
         onBackNavigationPressed = backPressedEvent
     }
     // endregion

@@ -1,6 +1,5 @@
 package no.mhl.showroom.ui.gallery
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +40,7 @@ class GalleryFragment : Fragment() {
 
     private fun setupShowroom() {
         showroom.attach((activity as AppCompatActivity), provideGalleryData())
-        showroom.setBackPressedEvent { findNavController().popBackStack()  }
+        showroom.setNavigationExitEvent { findNavController().popBackStack()  }
     }
     // endregion
 
