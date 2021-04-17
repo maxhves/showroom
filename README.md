@@ -39,7 +39,7 @@ Currently, the project also makes use the following open source libraries:
 
 ### Dependency
 
-This library is currently published on [JitPack](https://jitpack.io/#maxhvesser/showroom) and is therefore accessible via the following in your `build.gradle` file:
+This library is currently accessible via [JitPack](https://jitpack.io/#maxhvesser/showroom) and can therefore be used in your project by adding the following to your `build.gradle` file:
 
 ```Gradle
 dependencies {
