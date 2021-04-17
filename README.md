@@ -58,6 +58,52 @@ dependencies {
 }
 ```
 
+### Setup
+
+Please see the [sameple app](https://github.com/maxhvesser/showroom/tree/master/app/src/main) for a more detailed example of a suggested way to setup this project in your own app.
+
+**Initial setup**
+
+Showroom should be instantiated by calling the provided `attach()` function:
+
+```Kotlin
+showroom.attach((activity as AppCompatActivity), provideGalleryData())
+```
+
+Whereby `activity` must by of type `AppCompatActivity` and `provideGalleryData` must be of type `List<GalleryData>`
+
+**Exiting the gallery**
+
+In the case of supporting custom routines when click the 'exit' icon in the gallery the following callback is provided:
+
+```Kotlin
+showroom.setNavigationExitEvent { /** exit routine */  }
+```
+
+Further to this, Showroom provides a function to reset the activity state upon exit, you may choose to use this in, for example `onDestroy` or inside of an `onBackPressed` event: 
+
+```Kotlin
+override fun onDestroy() {
+    super.onDestroy()
+    showroom.restoreWindowPreGallery()
+}
+```
+
+**Display cutout**
+
+For devices running Android 9 (API level 28) and above, there is a possiblity that the device will have a cutout. Therefore it is strongly encouraged that you [support display cutouts](https://developer.android.com/guide/topics/display-cutout) in your app. If you don't then unexpected graphical issues will occur when entering/exiting immersive mode. A suggested way to support display cutouts is by adding the following to your `MainActivity`:
+
+```Kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+    }
+}
+```
+
 ### Releases
 
 The current release is [v1.1.3-alpha](https://github.com/maxhvesser/showroom/releases/tag/1.1.3-alpha) found at the respective link otherwise visit [releases](https://github.com/maxhvesser/showroom/releases) for the complete list.
