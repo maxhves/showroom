@@ -35,11 +35,22 @@ Currently, the project also makes use the following open source libraries:
 
 ### Show me it
 
-
+<p
+  align="left">
+  <img 
+      src="https://raw.githubusercontent.com/maxhvesser/showroom/master/images/screenshot_home.jpg"
+      width="250">
+  <img 
+      src="https://raw.githubusercontent.com/maxhvesser/showroom/master/images/screenshot_gallery.jpg"
+      width="250">
+  <img 
+      src="https://raw.githubusercontent.com/maxhvesser/showroom/master/images/showroom_recording.webp"
+      width="250">
+</p>
 
 ### Dependency
 
-This library is currently published on [JitPack](https://jitpack.io/#maxhvesser/showroom) and is therefore accessible via the following in your `build.gradle` file:
+This library is currently accessible via [JitPack](https://jitpack.io/#maxhvesser/showroom) and can therefore be used in your project by adding the following to your `build.gradle` file:
 
 ```Gradle
 dependencies {
