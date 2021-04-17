@@ -13,7 +13,7 @@
 
 Showroom is an image gallery library built for Android. The aim of this library is to provide a single view component that provides an image gallery experience almost completely out-of-the-box with as little configuration from the consumer as possible. The project utilizes Kotlin and is very much in active development.
 
-Currently the project is using a Release Canditate version of the [AndroidX Core KTX library](https://developer.android.com/jetpack/androidx/releases/core), this is to get access to the latest compatibility APIs that the library has to offer due to issues with immersive mode pre version 1.5.0.
+<sup>**Note: currently the project is using a Release Canditate version of the [AndroidX Core KTX library](https://developer.android.com/jetpack/androidx/releases/core), this is to get access to the latest compatibility APIs that the library has to offer due to issues with immersive mode pre version 1.5.0.**</sup>
 
 ### Features
 
