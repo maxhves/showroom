@@ -156,10 +156,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
             }
 
             // Attempt to ensure system bar icons are white
-            WindowInsetsControllerCompat(parentActivity.window, parentActivity.window.decorView).apply {
-                isAppearanceLightNavigationBars = false
-                isAppearanceLightStatusBars = false
-            }
+            setNavigationBarsLight()
 
             // Listen for insets and adjust as necessary
             ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
@@ -331,11 +328,25 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region Miscellaneous
+    private fun setNavigationBarsLight() = setNavigationBarMode(true)
+    private fun setNavigationBarsDark() = setNavigationBarMode(false)
+
+    private fun setNavigationBarMode(light: Boolean) {
+        val window = parentActivity.window
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightNavigationBars = light.not()
+            isAppearanceLightStatusBars = light.not()
+        }
+    }
+
     fun restoreWindowPreGallery() {
         parentActivity.window.apply {
             navigationBarColor = originalNavigationBarColor
             statusBarColor = originalStatusBarColor
         }
+
+        setNavigationBarsDark()
+
         if (immersed) { toggleImmersion() }
         WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
     }
