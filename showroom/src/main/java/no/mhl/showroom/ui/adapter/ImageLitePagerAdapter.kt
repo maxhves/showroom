@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import no.mhl.showroom.R
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.ui.adapter.viewholder.ImageLiteViewHolder
 
-class ImageLitePagerAdapter(private val data: List<GalleryData>) :
+class ImageLitePagerAdapter(private val data: List<GalleryImage>) :
     RecyclerView.Adapter<ImageLiteViewHolder>() {
 
     // region Click Properties

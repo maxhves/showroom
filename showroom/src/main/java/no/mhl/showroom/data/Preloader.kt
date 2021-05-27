@@ -5,7 +5,7 @@ import coil.Coil
 import coil.api.load
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 
 /**
  * Suspended function that preloads upcoming images for a given data set and limit via [Coil.load]
@@ -17,12 +17,12 @@ import no.mhl.showroom.data.model.GalleryData
 suspend fun preloadUpcomingImages(
     context: Context,
     position: Int,
-    data: List<GalleryData>,
+    data: List<GalleryImage>,
     preloadLimit: Int
 ) = withContext(Dispatchers.IO) {
-    fun preload(item: GalleryData)  {
-        Coil.load(context, item.image)
-        Coil.load(context, item.downscaledImage)
+    fun preload(item: GalleryImage)  {
+        Coil.load(context, item.url)
+        Coil.load(context, item.downscaledUrl)
     }
 
     if (position == 0) {

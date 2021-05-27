@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2
 import coil.Coil
@@ -17,10 +16,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import no.mhl.showroom.R
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.data.preloadUpcomingImages
 import no.mhl.showroom.ui.adapter.ImageLitePagerAdapter
-import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.util.setCount
 import no.mhl.showroom.util.setDescription
 import okhttp3.OkHttpClient
@@ -37,7 +35,7 @@ class ShowroomLite(
     // endregion
 
     // region Properties
-    private lateinit var galleryData: List<GalleryData>
+    private lateinit var galleryData: List<GalleryImage>
     private lateinit var imagePagerAdapter: ImageLitePagerAdapter
     private var initialPosition: Int = 0
     val currentPosition: Int
@@ -102,7 +100,7 @@ class ShowroomLite(
         } finally { typedArray.recycle() }
     }
 
-    fun setupWithData(data: List<GalleryData>, startAtIndex: Int = 0) {
+    fun setupWithData(data: List<GalleryImage>, startAtIndex: Int = 0) {
         galleryData = data
         initialPosition = startAtIndex
         setupViews()

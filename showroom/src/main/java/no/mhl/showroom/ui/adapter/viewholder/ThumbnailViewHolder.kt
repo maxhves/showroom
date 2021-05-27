@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import no.mhl.showroom.R
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 
 class ThumbnailViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -15,13 +15,13 @@ class ThumbnailViewHolder(private val view: View) : RecyclerView.ViewHolder(view
     // endregion
 
     // region Binding
-    fun bind(item: GalleryData, thumbnailClickedEvent: ((position: Int) -> Unit)?, position: Int) {
+    fun bind(item: GalleryImage, thumbnailClickedEvent: ((position: Int) -> Unit)?, position: Int) {
         frameView.visibility = when (item.selected) {
             true -> View.VISIBLE
             false -> View.GONE
         }
 
-        imageView.load(item.downscaledImage) {
+        imageView.load(item.downscaledUrl) {
             error(R.drawable.thumbnail_placeholder)
             placeholder(R.drawable.thumbnail_placeholder)
             crossfade(true)

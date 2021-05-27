@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import no.mhl.showroom.R
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 
 class ImageLiteViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -14,8 +14,8 @@ class ImageLiteViewHolder(private val view: View) : RecyclerView.ViewHolder(view
     // endregion
 
     // region Binding
-    fun bind(item: GalleryData, imageClickedEvent: (() -> Unit)?) {
-        imageView.load(item.image) { error(R.drawable.ic_error) }
+    fun bind(item: GalleryImage, imageClickedEvent: (() -> Unit)?) {
+        imageView.load(item.url) { error(R.drawable.ic_error) }
         imageView.setOnClickListener { imageClickedEvent?.invoke() }
     }
     // endregion

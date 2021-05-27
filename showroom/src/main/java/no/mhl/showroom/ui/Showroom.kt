@@ -28,13 +28,12 @@ import no.mhl.showroom.Constants.MAX_ALPHA
 import no.mhl.showroom.Constants.MIN_ALPHA
 import no.mhl.showroom.Constants.TRANSPARENT
 import no.mhl.showroom.R
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.data.preloadUpcomingImages
 import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
 import no.mhl.showroom.ui.adapter.viewholder.ImagePagerViewHolder
 import no.mhl.showroom.ui.views.InfiniteViewPager2
-import no.mhl.showroom.util.indexOrigin
 import no.mhl.showroom.util.setCount
 import no.mhl.showroom.util.setDescription
 import okhttp3.OkHttpClient
@@ -54,7 +53,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region Data Properties
-    private lateinit var galleryData: List<GalleryData>
+    private lateinit var galleryData: List<GalleryImage>
     private lateinit var imagePagerAdapter: ImagePagerAdapter
     private lateinit var thumbnailRecyclerAdapter: ThumbnailRecyclerAdapter
     private var originalStatusBarColor: Int = 0
@@ -126,7 +125,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
     }
 
-    fun attach(activity: AppCompatActivity, data: List<GalleryData>, openAtIndex: Int = 0) {
+    fun attach(activity: AppCompatActivity, data: List<GalleryImage>, openAtIndex: Int = 0) {
         parentActivity = activity
         galleryData = data
         initialPosition = openAtIndex

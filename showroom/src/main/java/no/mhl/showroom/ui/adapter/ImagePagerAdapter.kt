@@ -3,14 +3,14 @@ package no.mhl.showroom.ui.adapter
 import android.view.*
 import androidx.recyclerview.widget.RecyclerView
 import no.mhl.showroom.R
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.ui.adapter.viewholder.ImagePagerViewHolder
 
-class ImagePagerAdapter(data: List<GalleryData>) :
+class ImagePagerAdapter(data: List<GalleryImage>) :
     RecyclerView.Adapter<ImagePagerViewHolder>() {
 
     // region
-    private val galleryData: List<GalleryData> = listOf(data.last()) + data + listOf(data.first())
+    private val galleryData: List<GalleryImage> = listOf(data.last()) + data + listOf(data.first())
     // endregion
 
     // region Properties

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import no.mhl.showroom.R
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.ui.adapter.viewholder.ThumbnailViewHolder
 
-class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryData>) :
+class ThumbnailRecyclerAdapter(private val galleryData: List<GalleryImage>) :
     RecyclerView.Adapter<ThumbnailViewHolder>() {
 
     // region Click Exposure

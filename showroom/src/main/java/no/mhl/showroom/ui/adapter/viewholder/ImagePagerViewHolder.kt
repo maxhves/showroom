@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.alexvasilkov.gestures.views.GestureImageView
 import no.mhl.showroom.R
-import no.mhl.showroom.data.model.GalleryData
+import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.util.dp
 
 class ImagePagerViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -16,8 +16,8 @@ class ImagePagerViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
     // endregion
 
     // region Binding
-    fun bind(item: GalleryData, imageClickedEvent: (() -> Unit)?) {
-        imageView.load(item.image) {
+    fun bind(item: GalleryImage, imageClickedEvent: (() -> Unit)?) {
+        imageView.load(item.url) {
             error(R.drawable.ic_error)
             crossfade(true)
             listener(
