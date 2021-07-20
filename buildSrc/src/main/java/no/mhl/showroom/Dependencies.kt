@@ -12,12 +12,12 @@ object Libs {
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
 
-        const val ktx = "androidx.core:core-ktx:1.5.0-rc01"
+        const val ktx = "androidx.core:core-ktx:1.6.0"
     }
 
     // AndroidX
     object AndroidX {
-        const val appCompat = "androidx.appcompat:appcompat:1.2.0"
+        const val appCompat = "androidx.appcompat:appcompat:1.3.0"
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val recycler = "androidx.recyclerview:recyclerview:1.2.0"
         const val viewPager = "androidx.viewpager2:viewpager2:1.0.0"

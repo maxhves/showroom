@@ -1,5 +1,6 @@
 package no.mhl.showroom.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
@@ -7,6 +8,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.util.AttributeSet
 import android.view.*
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,8 +30,8 @@ import no.mhl.showroom.Constants.MAX_ALPHA
 import no.mhl.showroom.Constants.MIN_ALPHA
 import no.mhl.showroom.Constants.TRANSPARENT
 import no.mhl.showroom.R
-import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.data.preloadUpcomingImages
+import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
 import no.mhl.showroom.ui.adapter.viewholder.ImagePagerViewHolder
@@ -58,6 +60,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     private lateinit var thumbnailRecyclerAdapter: ThumbnailRecyclerAdapter
     private var originalStatusBarColor: Int = 0
     private var originalNavigationBarColor: Int = 0
+    private var originalStatusBarsAreLight: Boolean = false
     private var initialPosition: Int = 0
     private var immersed: Boolean = false
     private var topPaddingUpdated: Boolean = false
@@ -131,6 +134,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         initialPosition = openAtIndex
         originalStatusBarColor = activity.window.statusBarColor
         originalNavigationBarColor = activity.window.navigationBarColor
+        originalStatusBarsAreLight = isStatusBarLight()
         setupViews()
     }
 
@@ -145,6 +149,9 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
 
         if (Build.VERSION.SDK_INT >= 28) {
 
+            // Ensure system bar icons are white
+            setStatusBarIconsLight()
+
             // Declare we are drawing under system bars
             WindowCompat.setDecorFitsSystemWindows(parentActivity.window, false)
             
@@ -153,9 +160,6 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
                 navigationBarColor = Color.parseColor(TRANSPARENT)
                 statusBarColor = Color.parseColor(TRANSPARENT)
             }
-
-            // Attempt to ensure system bar icons are white
-            setNavigationBarsLight()
 
             // Listen for insets and adjust as necessary
             ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
@@ -197,7 +201,7 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
         }
 
         imageViewPager.apply {
-            setAdapter<ImagePagerViewHolder>(imagePagerAdapter, imagePreloadLimit)
+            setAdapter(imagePagerAdapter, imagePreloadLimit)
             currentItemPosition = initialPosition
             registerOnPageCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -327,24 +331,34 @@ constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs
     // endregion
 
     // region Miscellaneous
-    private fun setNavigationBarsLight() = setNavigationBarMode(true)
-    private fun setNavigationBarsDark() = setNavigationBarMode(false)
-
-    private fun setNavigationBarMode(light: Boolean) {
+    private fun setStatusBarIconsDark() {
         val window = parentActivity.window
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightNavigationBars = light.not()
-            isAppearanceLightStatusBars = light.not()
+            isAppearanceLightStatusBars = true
         }
     }
 
+    private fun setStatusBarIconsLight() {
+        val window = parentActivity.window
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+        }
+    }
+
+    @SuppressLint("InlinedApi")
+    @Suppress("DEPRECATION")
+    private fun isStatusBarLight(): Boolean {
+        val window = parentActivity.window
+        return window.decorView.systemUiVisibility and SYSTEM_UI_FLAG_LIGHT_STATUS_BAR != 0
+    }
+
     fun restoreWindowPreGallery() {
+        if (originalStatusBarsAreLight) { setStatusBarIconsDark() }
+
         parentActivity.window.apply {
             navigationBarColor = originalNavigationBarColor
             statusBarColor = originalStatusBarColor
         }
-
-        setNavigationBarsDark()
 
         if (immersed) { toggleImmersion() }
         WindowCompat.setDecorFitsSystemWindows(parentActivity.window, true)
