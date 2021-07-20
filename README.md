@@ -54,7 +54,7 @@ This library is currently accessible via [JitPack](https://jitpack.io/#maxhvesse
 
 ```Gradle
 dependencies {
-    implementation 'com.github.maxhvesser:showroom:1.1.4-alpha'
+    implementation 'com.github.maxhvesser:showroom:1.1.5'
 }
 ```
 
@@ -106,7 +106,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 ### Releases
 
-The current release is [v1.1.4-alpha](https://github.com/maxhvesser/showroom/releases/tag/1.1.4-alpha) found at the respective link otherwise visit [releases](https://github.com/maxhvesser/showroom/releases) for the complete list.
+The current release is [v1.1.5](https://github.com/maxhvesser/showroom/releases/tag/1.1.5) found at the respective link otherwise visit [releases](https://github.com/maxhvesser/showroom/releases) for the complete list.
 
 ### License
 
