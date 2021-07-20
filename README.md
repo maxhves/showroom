@@ -9,7 +9,8 @@
 
 ## Showroom
 
-[![Build Status](https://travis-ci.com/MaxHvesser/showroom.svg?branch=master)](https://travis-ci.com/MaxHvesser/showroom)
+[![Build Status](https://travis-ci.com/MaxHvesser/showroom.svg?branch=master)](https://travis-ci.com/MaxHvesser/showroom) [![](https://jitpack.io/v/maxhvesser/showroom.svg)](https://jitpack.io/#maxhvesser/showroom)
+
 
 Showroom is an image gallery library built for Android. The aim of this library is to provide a single view component that provides an image gallery experience almost completely out-of-the-box with as little configuration from the consumer as possible. The project utilizes Kotlin and is very much in active development.
 
