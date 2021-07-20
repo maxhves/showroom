@@ -2,7 +2,6 @@
 <resources>
 
     <!-- region Showroom -->
-    <string name="go_to_first_text">Go To First</string>
     <!-- endregion -->
 
     <!-- region Action Button -->

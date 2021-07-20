@@ -1,9 +1,9 @@
 package no.mhl.showroom.ui
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import no.mhl.showroom.R
 
 class MainActivity : AppCompatActivity() {

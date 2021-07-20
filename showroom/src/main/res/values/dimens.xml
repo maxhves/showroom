@@ -9,7 +9,6 @@
     <!-- Margin -->
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
-    <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_minimum">2dp</dimen>
 
     <!-- Padding -->

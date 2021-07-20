@@ -7,7 +7,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.util.AttributeSet
-import android.view.*
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -34,14 +34,13 @@ import no.mhl.showroom.data.preloadUpcomingImages
 import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.ui.adapter.ImagePagerAdapter
 import no.mhl.showroom.ui.adapter.ThumbnailRecyclerAdapter
-import no.mhl.showroom.ui.adapter.viewholder.ImagePagerViewHolder
 import no.mhl.showroom.ui.views.InfiniteViewPager2
 import no.mhl.showroom.util.setCount
 import no.mhl.showroom.util.setDescription
 import okhttp3.OkHttpClient
 
 
-class Showroom
+class  Showroom
 constructor(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     // region View Properties

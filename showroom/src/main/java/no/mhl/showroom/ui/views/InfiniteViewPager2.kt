@@ -7,8 +7,8 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import no.mhl.showroom.R
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import no.mhl.showroom.R
 
 class InfiniteViewPager2(
     context: Context,

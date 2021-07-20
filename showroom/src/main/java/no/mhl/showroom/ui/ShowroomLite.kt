@@ -16,8 +16,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import no.mhl.showroom.R
-import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.data.preloadUpcomingImages
+import no.mhl.showroom.model.GalleryImage
 import no.mhl.showroom.ui.adapter.ImageLitePagerAdapter
 import no.mhl.showroom.util.setCount
 import no.mhl.showroom.util.setDescription

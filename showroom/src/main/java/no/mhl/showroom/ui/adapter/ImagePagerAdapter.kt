@@ -1,6 +1,7 @@
 package no.mhl.showroom.ui.adapter
 
-import android.view.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import no.mhl.showroom.R
 import no.mhl.showroom.model.GalleryImage
