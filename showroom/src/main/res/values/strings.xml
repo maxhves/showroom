@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- region Showroom -->
-    <!-- endregion -->
-
     <!-- region Action Button -->
     <string name="action_button_content_description">Action Button</string>
     <!-- endregion -->
